@@ -1,8 +1,6 @@
 package main
 
 import (
-	"time"
-
 	"github.com/metagogs/gogs"
 	"github.com/metagogs/gogs/acceptor"
 	"github.com/metagogs/gogs/config"
@@ -21,9 +19,7 @@ func main() {
 		Name:     "base",
 		Groups: []*acceptor.AcceptorGroupConfig{
 			&acceptor.AcceptorGroupConfig{
-				GroupName:          "base",
-				BucketFillInterval: 40 * time.Millisecond,
-				BucketCapacity:     10,
+				GroupName: "base",
 			},
 		},
 	}))
@@ -34,9 +30,7 @@ func main() {
 		Name:     "world",
 		Groups: []*acceptor.AcceptorGroupConfig{
 			&acceptor.AcceptorGroupConfig{
-				GroupName:          "data",
-				BucketFillInterval: 40 * time.Millisecond,
-				BucketCapacity:     10,
+				GroupName: "data",
 			},
 		},
 	}))
