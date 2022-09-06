@@ -22,10 +22,12 @@ gogs is an simple, fast and lightweight game server framewrok written in golang.
 - [ ] Support gogs generate docker file
 - [ ] Support gogs generate k8s yaml
 - [ ] Support custom game packet protocol
+- [ ] Support kubegame controller, create game pod with api
 - [ ] Add more examples
 - [ ] Add more tests
 - [ ] Add more documentation
 - [ ] Test coverage reaches 80% 
+- [ ] k8s friendly, hot reload?
 
 
 ## Getting Started
