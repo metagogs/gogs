@@ -1,0 +1,31 @@
+coverage:
+  status:
+    project:
+      default:
+        threshold: 0% 
+        branches:
+          - main
+    patch:
+      default:
+        threshold: 0% 
+        branches:
+          - main
+
+comment:
+  layout: reach, diff, flags, files
+  behavior: default
+  require_changes: false
+  branches:
+    - main
+    
+ignore:
+  - "**/*.pb.go"
+  - "**/*_test.go"
+  - "LICENSES"
+  - ".git"
+  - "*.yml"
+  - "*.yaml"
+  - "*.md"
+  - "docs/.*"
+  - "**/*.proto"
+  - "e2e/testdata/.*"

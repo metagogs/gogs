@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package game;
+option go_package = "/game";
+
+
+// @gogs:Components
+message Components {
+    BaseWorld BaseWorld = 1;
+}
+
+message BaseWorld {
+    BindUser BindUser = 1;
+    JoinWorld JoinWorld = 2;
+    JoinWorldNotify JoinWorldNotify = 3;
+    UpdateUserInWorld UpdateUserInWorld = 4;
+    BindSuccess BindSuccess = 5;
+    JoinWorldSuccess JoinWorldSuccess =6;
+}
+
+message Vecotr3 {
+    float x = 1;
+    float y = 2;
+    float z = 3;
+}
+
+message BindUser {
+    string uid = 1;
+}
+
+// @gogs:ServerMessage
+message BindSuccess {
+}
+
+message JoinWorld {
+    string uid = 1;
+}
+
+// @gogs:ServerMessage
+message JoinWorldSuccess {
+    repeated string uids = 1;
+}
+
+// @gogs:ServerMessage
+message JoinWorldNotify {
+    string uid = 1;
+
+    string name = 2;
+}
+
+message UpdateUserInWorld {
+    string uid = 1;
+
+    Vecotr3 position = 2;
+}
+

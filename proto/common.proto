@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package proto;
+option go_package = "/proto";
+
+
+// @gogs:Request
+message Ping {
+    string time = 1;
+}
+
+message Pong {
+    string time = 1;
+}
+
+// @gogs:Components
+message Components {
+    Network Network = 1;
+}
+
+message Network {
+    Ping Ping = 1;
+    Pong Pong = 2;
+}
