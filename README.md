@@ -13,7 +13,7 @@
 
 
 
-gogs is an simple, fast and lightweight game server framewrok written in golang. It is designed to be easy to use and easy to extend. It will generate logic code from protobuf files, and you can use it to develop your game server. It is also a good choice for you to learn golang. It support websocket and webrtc datachannel.
+gogs is an simple, fast and lightweight game server framewrok written in golang. It is designed to be easy to use and easy to extend. It will generate logic code from protobuf files, and you can use it to develop your game server. It's also a good starting point for you to learn golang. It supports websocket and webrtc datachannel.
 
 ---
 
