@@ -28,6 +28,22 @@ func TestIsFileEqual(t *testing.T) {
 			},
 			want: false,
 		},
+		{
+			name: "not euqal file",
+			args: args{
+				a: "testdata/e_go.mod",
+				b: "testdata/c_go.mod",
+			},
+			want: false,
+		},
+		{
+			name: "not euqal file",
+			args: args{
+				a: "testdata/a_go.mod",
+				b: "testdata/f_go.mod",
+			},
+			want: false,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
