@@ -9,7 +9,7 @@ lint:
 .PHONY: test
 test: 
 	@go test -cover -coverpkg=./... -coverprofile coverage.out -covermode=atomic ./... --count=1 
-	@cat coverage.out | grep -v "testdata/" | grep -v "pb.go" > coverage.tmp
+	@cat coverage.out | grep -v "testdata/" | grep -v "pb.go" | grep -v "examples" > coverage.tmp
 	@mv coverage.tmp coverage.out
 
 .PHONY: testview
