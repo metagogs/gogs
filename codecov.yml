@@ -19,9 +19,12 @@ comment:
     - main
     
 ignore:
+  - "LICENSES"
+  - "Makefile"
+  - ".gitignore"
+  - "**/*.sh"
   - "**/*.pb.go"
   - "**/*_test.go"
-  - "LICENSES"
   - ".git"
   - "*.yml"
   - "*.yaml"
