@@ -8,6 +8,7 @@ import (
 
 	"github.com/emicklei/proto"
 	"github.com/ettle/strcase"
+	"github.com/metagogs/gogs/packet"
 	"github.com/metagogs/gogs/tools/gogs/gen/gentemplate"
 	"github.com/metagogs/gogs/tools/gogs/protoparse"
 	"github.com/metagogs/gogs/utils/execx"
@@ -34,6 +35,8 @@ type Field struct {
 	Name           string
 	Index          int
 	ServerMessage  bool
+	Action10       string //action 10进制
+	Action16       string //action 16进制
 }
 
 type Gen struct {
@@ -125,6 +128,10 @@ func (g *Gen) parseComponent(component *proto.NormalField) *Component {
 			data.Index = v.Sequence
 			data.Package = g.proto.PbPackage
 			data.BasePackage = g.basePackage
+			//create action
+			actionValue := packet.CreateAction(packet.ServicePacket, uint8(data.ComponentIndex), uint16(data.Index))
+			data.Action10 = fmt.Sprint(actionValue)
+			data.Action16 = fmt.Sprintf("0x%x", actionValue)
 			if g.messages[v.Name].Comment != nil {
 				if protoparse.CommentsContains(g.messages[v.Name].Comment.Lines, "@gogs:ServerMessage") {
 					data.ServerMessage = true
