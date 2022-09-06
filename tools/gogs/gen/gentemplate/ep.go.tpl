@@ -43,7 +43,7 @@ var _{{.Name}}ComponentDesc = component.ComponentDesc{
 	ComponentType:  (*Component)(nil),
 	Methods: []component.ComponentMethodDesc{
 		{{range .Fields}}{
-			MethodIndex: packet.CreateAction(packet.ServicePacket, {{.ComponentIndex}}, {{.Index}}),
+			MethodIndex: packet.CreateAction(packet.ServicePacket, {{.ComponentIndex}}, {{.Index}}), // {{.Action16}} {{.Action10}} 
 			FieldType:   reflect.TypeOf({{.Name}}{}),
 			{{if .ServerMessage}}Handler:     nil,{{else}}Handler:     _{{.ComponentName}}Component_{{.Name}}_Handler,{{end}}
 			FiledHanler: func() interface{} {

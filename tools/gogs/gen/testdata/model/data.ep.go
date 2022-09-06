@@ -33,7 +33,7 @@ var _BaseWorldComponentDesc = component.ComponentDesc{
 	ComponentType:  (*Component)(nil),
 	Methods: []component.ComponentMethodDesc{
 		{
-			MethodIndex: packet.CreateAction(packet.ServicePacket, 1, 1),
+			MethodIndex: packet.CreateAction(packet.ServicePacket, 1, 1), // 0x810001 8454145
 			FieldType:   reflect.TypeOf(BindUser{}),
 			Handler:     _BaseWorldComponent_BindUser_Handler,
 			FiledHanler: func() interface{} {
@@ -41,7 +41,7 @@ var _BaseWorldComponentDesc = component.ComponentDesc{
 			},
 		},
 		{
-			MethodIndex: packet.CreateAction(packet.ServicePacket, 1, 2),
+			MethodIndex: packet.CreateAction(packet.ServicePacket, 1, 2), // 0x810002 8454146
 			FieldType:   reflect.TypeOf(BindSuccess{}),
 			Handler:     nil,
 			FiledHanler: func() interface{} {
