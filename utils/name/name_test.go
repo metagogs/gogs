@@ -41,6 +41,12 @@ func TestCamelCase(t *testing.T) {
 			},
 			want: "GogsIsTesting",
 		},
+		{
+			args: args{
+				s: "_name",
+			},
+			want: "XName",
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

@@ -30,13 +30,3 @@ func NewSnowNode() (*snowflake.Node, error) {
 
 	return sf, nil
 }
-
-func NewSnowNodeWithID(nodeID int64) (*snowflake.Node, error) {
-	snowflake.NodeBits = 20
-	sf, err := snowflake.NewNode(nodeID)
-	if err != nil {
-		return nil, err
-	}
-
-	return sf, nil
-}
