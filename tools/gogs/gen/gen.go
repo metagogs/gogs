@@ -160,7 +160,6 @@ func (g *Gen) ep() error {
 	}
 	if !g.debugNoPb {
 		protocCmd := fmt.Sprintf("protoc --go_out=%s %s", out, g.protoFile)
-		fmt.Println(protocCmd)
 		if _, err := execx.Exec(protocCmd); err != nil {
 			fmt.Println(err.Error())
 			pterm.Error.Println("run protoc error " + err.Error())

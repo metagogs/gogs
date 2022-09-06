@@ -30,7 +30,7 @@ gogs is an simple, fast and lightweight game server framewrok written in golang.
 ### Init your project
 install the gogs
 ```
-go get github.com/metagogs/gogs/tools@latest
+go install github.com/metagogs/gogs/tools/gogs@v0.0.9
 ```
 init project
 ```
@@ -44,6 +44,7 @@ gogs go -f data.proto
 ```
 run your game server
 ```
+go mod tidy
 go run main.go
 ```
 ### Generated Project
