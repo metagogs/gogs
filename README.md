@@ -21,10 +21,12 @@ gogs is an simple, fast and lightweight game server framewrok written in golang.
 - [ ] Support tracing
 - [ ] Support gogs generate docker file
 - [ ] Support gogs generate k8s yaml
+- [ ] Support custom game packet protocol
 - [ ] Add more examples
 - [ ] Add more tests
 - [ ] Add more documentation
 - [ ] Test coverage reaches 80% 
+
 
 ## Getting Started
 ### Prerequisites
@@ -67,6 +69,9 @@ config.yaml
 data.proto      
 main.go
 ```
+
+## How to encode/decode the message
+### Packet Protocol
 ## Contributing
 ### Running the gogs tests
 ```
