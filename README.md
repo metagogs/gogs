@@ -1,13 +1,17 @@
 # gogs: Golang Game Server Framework
 
+
 [![version](https://img.shields.io/github/v/tag/metagogs/gogs?label=version)](https://github.com/metagogs/gogs)
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/metagogs/gogs/Go)
 [![codecov](https://codecov.io/gh/metagogs/gogs/branch/main/graph/badge.svg?token=CLNQZ26H6X)](https://codecov.io/gh/metagogs/gogs)
+![GitHub issues](https://img.shields.io/github/issues/metagogs/gogs)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/metagogs/gogs/Go)
+![GitHub Release Date](https://img.shields.io/github/release-date/metagogs/gogs)
+![GitHub last commit](https://img.shields.io/github/last-commit/metagogs/gogs)
 [![goversion](https://img.shields.io/github/go-mod/go-version/metagogs/gogs)](https://github.com/metagogs/gogs)
 [![license](https://img.shields.io/github/license/metagogs/gogs)](https://github.com/metagogs/gogs)
-![GitHub issues](https://img.shields.io/github/issues/metagogs/gogs)
-![GitHub last commit](https://img.shields.io/github/last-commit/metagogs/gogs)
 ![GitHub top language](https://img.shields.io/github/languages/top/metagogs/gogs)
+
+
 
 gogs is an simple, fast and lightweight game server framewrok written in golang. It is designed to be easy to use and easy to extend. It will generate logic code from protobuf files, and you can use it to develop your game server. It is also a good choice for you to learn golang. It support websocket and webrtc datachannel.
 
