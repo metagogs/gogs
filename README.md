@@ -129,7 +129,7 @@ gogs have three encode&decode type - ecodeType in protocol header
 
 message = **JSON binary data**
 
-`gogs get the action index from message, then get the filed type and decode the message, then call the logic function for the json without protocol header, the message should add a filed named action, the value is the filed name`
+`gogs get the action index from message, then get the filed type and decode the message, then call the logic function. the json message without protocol header should add a filed named action, the value is the filed name`
 
 ```json
 {
