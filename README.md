@@ -74,6 +74,77 @@ main.go
 
 ## How to encode/decode the message
 ### Packet Protocol
+gogs use 8 bytes as the protocol header
+```
+0     byte  flag         8bit    protocol flag, awalys 0x7E 
+1     byte  version      5bit    protocel version
+            encodeType   3bit    protocel encode type
+2     byte  packetType   2bit    packet message type 1 system 2 server
+            component    6bit    message component index
+3.4   byte  action       16bit   message action index
+5.6.7 byte  lengt        24bit   message length
+```
+
+### What is the action index
+action index = packetType + component index + action index
+```protobuf
+// @gogs:Components
+message Components {
+    BaseWorld BaseWorld = 1; // 1 is the component index
+}
+
+message BaseWorld {
+    BindUser BindUser = 1; // 1 is the action index
+
+    BindSuccess BindSuccess = 2; // 2 is the action index
+}
+message BindUser {
+    string uid = 1;
+}
+
+
+// @gogs:ServerMessage
+message BindSuccess {
+}
+```
+
+like this proto, the BindUser and BindSuccess is the message comunication between client and server
+
+BindUser action index = packetType <<22 | component <<16 | action = 2 << 22 | 1 << 16 | 1 = 0x810001
+
+BindSuccess action index = packetType <<22 | component <<16 | action = 2 << 22 | 1 << 16 | 2 = 0x810002
+
+### Packet encode & decode
+gogs have three encode&decode type - ecodeType in protocol header
+- 0 json encode&decode without protocol header
+- 1 json encode&decode with protocol header
+- 2 protobuf encode&decode with protocol header
+
+### Packet message
+
+message with encode type 0 (json without protocol header)
+
+**JSON binary data**
+
+message with encode type 1 (json with protocol header)
+
+**8 bytes protocol header** + **JSON binary data**
+
+message with encode type 2 (protobuf with protocol header)
+
+**8 bytes protocol header** + **protobuf binary data**
+
+gogs get the action index from message, then get the filed type and decode the message, then call the logic function
+
+for the json without protocol header, the message should add a filed named action, the value is the filed name
+
+like this
+```json
+{
+	"action": "BindUser",
+	"uid": "123"
+}
+```
 ## Contributing
 ### Running the gogs tests
 ```
