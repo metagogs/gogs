@@ -13,7 +13,7 @@
 
 
 
-gogs is an simple, fast and lightweight game server framewrok written in golang. It is designed to be easy to use and easy to extend. It will generate logic code from protobuf files, and you can use it to develop your game server. It is also a good choice for you to learn golang. It support websocket and webrtc datachannel.
+gogs is a simple, fast and lightweight game server framework written in golang. It is designed to be easy to use and easy to extend. It will generate logic code from protobuf files, and you can use it to develop your game server. It's also a good starting point for you to learn golang. It supports websocket and webrtc datachannel.
 
 ---
 
@@ -78,7 +78,7 @@ main.go
 
 ## How to encode/decode the message
 ### Packet Protocol
-gogs use 8 bytes as the protocol header
+gogs uses 8 bytes as the protocol header
 
 protocol header = flag + version + action index + message data length
 ```
@@ -122,7 +122,7 @@ BindUser action index = packetType <<22 | component <<16 | action = 2 << 22 | 1 
 BindSuccess action index = packetType <<22 | component <<16 | action = 2 << 22 | 1 << 16 | 2 = 0x810002
 
 ### Packet encode & decode
-gogs have three encode&decode type - ecodeType in protocol header
+gogs has three encode&decode types - encodeType in protocol header
 - 0 json encode&decode without protocol header
 - 1 json encode&decode with protocol header
 - 2 protobuf encode&decode with protocol header
@@ -133,7 +133,7 @@ gogs have three encode&decode type - ecodeType in protocol header
 
 message = **JSON binary data**
 
-`gogs get the action index from message, then get the filed type and decode the message, then call the logic function. the json message without protocol header should add a filed named action, the value is the filed name`
+`gogs retrieves the action index from the message, then gets the filed type and decodes the message, finally it calls the logic function. The json message without protocol header should add a filed named action, the value is the filed name`
 
 ```json
 {
