@@ -83,6 +83,15 @@ func TestSendConnectWS(t *testing.T) {
 	sessions := session.ListSessions()
 	assert.Equal(t, 1, len(sessions))
 
+	//test send data
+	sessions[0].SendData([]byte("hello world"))
+	select {
+	case <-time.After(1 * time.Second):
+		t.Fatal("server get the data timeout")
+	case msg := <-testClient.datas:
+		assert.Equal(t, "hello world", string(msg))
+	}
+
 	uid = userLogin(t, "e2e")
 	assert.NotEmpty(t, uid)
 

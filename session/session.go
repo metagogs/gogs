@@ -53,6 +53,10 @@ func (sess *Session) SendMessage(in interface{}, name ...string) error {
 	return sess.agent.Send(in, name...)
 }
 
+func (sess *Session) SendData(data []byte) {
+	sess.agent.SendData(data)
+}
+
 func (sess *Session) GetLastTimeOnline() int64 {
 	return sess.agent.GetLastTimeOnline()
 }
