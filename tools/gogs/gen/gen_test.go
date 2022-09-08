@@ -61,6 +61,11 @@ func TestNewGen(t *testing.T) {
 					"testdata/internal/server/server.go")
 				haveErr = true
 			}
+			if ok := filex.IsFileEqual("testdata/internal/message/message.go", g.getMessageFile()); !ok {
+				t.Errorf("Init.Generate() error = %s is not equal to %s", g.getMessageFile(),
+					"testdata/internal/message/message.go")
+				haveErr = true
+			}
 			if ok := filex.IsFileEqual("testdata/internal/logic/baseworld/bind_user_logic.go", g.getLogicFile()[0]); !ok {
 				t.Errorf("Init.Generate() error = %s is not equal to %s", g.getLogicFile()[0],
 					"testdata/internal/logic/baseworld/bind_user_logic.go")

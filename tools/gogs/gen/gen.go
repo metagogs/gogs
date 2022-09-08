@@ -78,6 +78,9 @@ func (g *Gen) Generate() error {
 	if err := g.server(); err != nil {
 		return err
 	}
+	if err := g.message(); err != nil {
+		return err
+	}
 	if err := g.genAllLogic(); err != nil {
 		return err
 	}
@@ -213,6 +216,21 @@ func (g *Gen) server() error {
 	return nil
 }
 
+func (g *Gen) message() error {
+	data := map[string]interface{}{}
+	data["BasePackage"] = g.basePackage
+	data["Package"] = g.proto.PbPackage
+	data["Components"] = g.componets.Components
+
+	file := g.getMessageFile()
+	if err := templatex.With("gogs").GoFmt(true).Parse(gentemplate.MessageTpl).SaveTo(data, file, true); err != nil {
+		pterm.Error.Printfln("generate file error " + file + ":" + err.Error())
+		return err
+	}
+
+	return nil
+}
+
 func (g *Gen) genAllLogic() error {
 	for _, c := range g.componets.Components {
 		for _, f := range c.Fields {
@@ -265,6 +283,10 @@ func (g *Gen) getServerFile() string {
 	return g.Home + "internal/server/server.go"
 }
 
+func (g *Gen) getMessageFile() string {
+	return g.Home + "internal/message/message.go"
+}
+
 func (g *Gen) getLogicFile() []string {
 	return g.logicPath
 }
@@ -275,6 +297,7 @@ func (g *Gen) clean() {
 	_ = os.Remove(g.getPBFile())
 	_ = os.Remove(g.getSvcFile())
 	_ = os.Remove(g.getServerFile())
+	_ = os.Remove(g.getMessageFile())
 	_ = os.Remove("internal/logic")
 	_ = os.RemoveAll(g.proto.PbPackage)
 }
