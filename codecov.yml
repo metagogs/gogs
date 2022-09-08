@@ -33,5 +33,6 @@ ignore:
   - "docs/.*"
   - "**/*.proto"
   - "e2e/testdata/.*"
+  - "e2e/helper.go"
   - "tools/gogs/gen/testdata/.*"
   - "examples/.*"
