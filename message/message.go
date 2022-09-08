@@ -33,8 +33,8 @@ func (m *MessageServer) CallMessageHandler(ctx context.Context, sess *session.Se
 }
 
 // EncodeMessage 编码消息
-func (m *MessageServer) EncodeMessage(in interface{}) (*packet.Packet, error) {
-	return m.codecHelper.Encode(in)
+func (m *MessageServer) EncodeMessage(in interface{}, name ...string) (*packet.Packet, error) {
+	return m.codecHelper.Encode(in, name...)
 }
 
 // RegisterComponent 注册组件

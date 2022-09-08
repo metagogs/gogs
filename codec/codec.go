@@ -189,18 +189,22 @@ func (d *CodecHelper) decodeBack(data []byte) (*packet.Packet, error) {
 	return nil, ErrNotValidJSONType
 }
 
-func (d *CodecHelper) Encode(in interface{}) (*packet.Packet, error) {
+func (d *CodecHelper) Encode(in interface{}, name ...string) (*packet.Packet, error) {
 	if d.packetEncodeType == CodecJSONDataNoHeader {
-		inType := reflect.TypeOf(in)
-		if inType.Kind() == reflect.Ptr {
-			inType = inType.Elem()
-		}
-
 		inMap := gconv.Map(in)
 		if inMap == nil {
 			inMap = make(map[string]interface{})
 		}
-		inMap["action"] = inType.Name()
+
+		if len(name) > 0 && len(name[0]) > 0 {
+			inMap["action"] = name[0]
+		} else {
+			inType := reflect.TypeOf(in)
+			if inType.Kind() == reflect.Ptr {
+				inType = inType.Elem()
+			}
+			inMap["action"] = inType.Name()
+		}
 
 		data, err := d.packetEncode.Encode(inMap)
 		if err != nil {
@@ -214,9 +218,16 @@ func (d *CodecHelper) Encode(in interface{}) (*packet.Packet, error) {
 		return packet.NewPacket(data), nil
 	}
 
-	action, err := d.dispatchServer.GetAction(in)
-	if err != nil {
-		return nil, err
+	var action uint32
+	var err error
+	if len(name) > 0 && len(name[0]) > 0 {
+		action, _ = d.dispatchServer.GetActionByName(name[0])
+	}
+	if action == 0 {
+		action, err = d.dispatchServer.GetAction(in)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	data, err := d.packetEncode.Encode(in)
