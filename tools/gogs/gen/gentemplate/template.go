@@ -16,6 +16,9 @@ var LogicTpl string
 //go:embed server.tpl
 var ServerTpl string
 
+//go:embed message.tpl
+var MessageTpl string
+
 //go:embed svc.tpl
 var SvcTpl string
 

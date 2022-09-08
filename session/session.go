@@ -46,11 +46,11 @@ func (sess *Session) IsLogin() bool {
 	return len(sess.uid) > 0
 }
 
-func (sess *Session) SendMessage(in interface{}) error {
+func (sess *Session) SendMessage(in interface{}, name ...string) error {
 	if sess.pool.config.SendMessageLog {
 		sess.log().Info("send message")
 	}
-	return sess.agent.Send(in)
+	return sess.agent.Send(in, name...)
 }
 
 func (sess *Session) GetLastTimeOnline() int64 {

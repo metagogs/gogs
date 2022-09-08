@@ -98,7 +98,7 @@ func (d *CodecHelper) Decode(data []byte) (*packet.Packet, error) {
 	parsePacket, err := packet.ParsePacket(data)
 	if err != nil {
 		//尝试判断是不是文本类型或者二进制的json类型
-		p, e := d.decodeBack(data)
+		p, e := d.decodeJSONWithoutHeader(data)
 		if e != nil {
 			//如果不是特殊类型，则按照协议错误处理
 			d.Warn("parse packet error", zap.Error(err), zap.String("json_error", e.Error()))
@@ -154,7 +154,7 @@ func (d *CodecHelper) Decode(data []byte) (*packet.Packet, error) {
 	return nil, ErrCodecType
 }
 
-func (d *CodecHelper) decodeBack(data []byte) (*packet.Packet, error) {
+func (d *CodecHelper) decodeJSONWithoutHeader(data []byte) (*packet.Packet, error) {
 	if len(data) < 2 {
 		//一定不是个JSON，没必要了
 		return nil, ErrNotValidJSONType
@@ -189,34 +189,21 @@ func (d *CodecHelper) decodeBack(data []byte) (*packet.Packet, error) {
 	return nil, ErrNotValidJSONType
 }
 
-func (d *CodecHelper) Encode(in interface{}) (*packet.Packet, error) {
+func (d *CodecHelper) Encode(in interface{}, name ...string) (*packet.Packet, error) {
 	if d.packetEncodeType == CodecJSONDataNoHeader {
-		inType := reflect.TypeOf(in)
-		if inType.Kind() == reflect.Ptr {
-			inType = inType.Elem()
-		}
+		return d.encodeJSONWithoutHeaderEncode(in, name...)
+	}
 
-		inMap := gconv.Map(in)
-		if inMap == nil {
-			inMap = make(map[string]interface{})
-		}
-		inMap["action"] = inType.Name()
-
-		data, err := d.packetEncode.Encode(inMap)
+	var action uint32
+	var err error
+	if len(name) > 0 && len(name[0]) > 0 {
+		action, _ = d.dispatchServer.GetActionByName(name[0])
+	}
+	if action == 0 {
+		action, err = d.dispatchServer.GetAction(in)
 		if err != nil {
 			return nil, err
 		}
-
-		if d.config.Debug {
-			d.Info(string(data), zap.String("codec", "encode"), zap.String("type", "json_without_header"))
-		}
-
-		return packet.NewPacket(data), nil
-	}
-
-	action, err := d.dispatchServer.GetAction(in)
-	if err != nil {
-		return nil, err
 	}
 
 	data, err := d.packetEncode.Encode(in)
@@ -234,4 +221,32 @@ func (d *CodecHelper) Encode(in interface{}) (*packet.Packet, error) {
 	}
 
 	return packetData, nil
+}
+
+func (d *CodecHelper) encodeJSONWithoutHeaderEncode(in interface{}, name ...string) (*packet.Packet, error) {
+	inMap := gconv.Map(in)
+	if inMap == nil {
+		inMap = make(map[string]interface{})
+	}
+
+	if len(name) > 0 && len(name[0]) > 0 {
+		inMap["action"] = name[0]
+	} else {
+		inType := reflect.TypeOf(in)
+		if inType.Kind() == reflect.Ptr {
+			inType = inType.Elem()
+		}
+		inMap["action"] = inType.Name()
+	}
+
+	data, err := d.packetEncode.Encode(inMap)
+	if err != nil {
+		return nil, err
+	}
+
+	if d.config.Debug {
+		d.Info(string(data), zap.String("codec", "encode"), zap.String("type", "json_without_header"))
+	}
+
+	return packet.NewPacket(data), nil
 }

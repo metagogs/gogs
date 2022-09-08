@@ -164,9 +164,9 @@ func (a *Agent) sendHeartbeat() {
 }
 
 // Send Message
-func (a *Agent) Send(in interface{}) error {
+func (a *Agent) Send(in interface{}, name ...string) error {
 	// encode the message with the message server
-	data, err := a.messageServer.EncodeMessage(in)
+	data, err := a.messageServer.EncodeMessage(in, name...)
 	if err != nil {
 		a.log().Error("encode error", zap.Error(err))
 		return err
@@ -178,6 +178,15 @@ func (a *Agent) Send(in interface{}) error {
 	}
 
 	return nil
+}
+
+func (a *Agent) SendData(data []byte) {
+	b := bytebuffer.Get()
+	b.Set(data)
+	select {
+	case a.chSend <- b:
+	case <-a.chDie:
+	}
 }
 
 func (a *Agent) SetLastAt() {
