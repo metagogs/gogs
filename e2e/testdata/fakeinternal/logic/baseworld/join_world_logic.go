@@ -4,6 +4,7 @@ import (
 	"context"
 	"sync"
 
+	"github.com/metagogs/gogs/e2e/testdata/fakeinternal/message"
 	"github.com/metagogs/gogs/e2e/testdata/fakeinternal/svc"
 	"github.com/metagogs/gogs/e2e/testdata/game"
 	"github.com/metagogs/gogs/session"
@@ -50,7 +51,7 @@ func (l *JoinWorldLogic) Handler(in *game.JoinWorld) {
 
 	worldUids := l.svcCtx.World.GetUsers(l.ctx)
 
-	_ = l.session.SendMessage(&game.JoinWorldSuccess{
+	_ = message.SendJoinWorldSuccess(l.session, &game.JoinWorldSuccess{
 		Uids: worldUids,
 	})
 
@@ -69,6 +70,8 @@ func (l *JoinWorldLogic) Handler(in *game.JoinWorld) {
 func (l *JoinWorldLogic) notify(uid string, send *game.JoinWorldNotify) {
 	defer beanPool.Put(send)
 	if result, _ := l.svcCtx.Helper().GetSessionByUID(uid, nil); len(result) > 0 {
-		l.svcCtx.Helper().SendMessageByID(result[0], send)
+		if sess, err := l.svcCtx.Helper().GetSessionByID(result[0]); err == nil {
+			_ = message.SendJoinWorldNotify(sess, send)
+		}
 	}
 }

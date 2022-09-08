@@ -3,6 +3,7 @@ package baseworld
 import (
 	"context"
 
+	"github.com/metagogs/gogs/e2e/testdata/fakeinternal/message"
 	"github.com/metagogs/gogs/e2e/testdata/fakeinternal/svc"
 	"github.com/metagogs/gogs/e2e/testdata/game"
 	"github.com/metagogs/gogs/session"
@@ -35,7 +36,7 @@ func (l *BindUserLogic) Handler(in *game.BindUser) {
 			player.DeleteSession(l.session.ID())
 		})
 
-		_ = l.session.SendMessage(&game.BindSuccess{})
+		_ = message.SendBindSuccess(l.session, &game.BindSuccess{})
 
 	} else {
 	}
