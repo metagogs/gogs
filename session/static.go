@@ -33,7 +33,7 @@ func BroadcastMessage(users []string, send interface{}, filter *SessionFilter, e
 			continue
 		}
 		if result, _ := GetSessionByUID(u, filter); len(result) > 0 {
-			go SendMessageByID(result[0], send)
+			SendMessageByID(result[0], send)
 		}
 	}
 }

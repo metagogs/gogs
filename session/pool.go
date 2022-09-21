@@ -8,6 +8,7 @@ import (
 	"github.com/metagogs/gogs/config"
 	"github.com/metagogs/gogs/gslog"
 	"github.com/metagogs/gogs/networkentity"
+	"github.com/metagogs/gogs/utils/slicex"
 	"go.uber.org/zap"
 )
 
@@ -33,18 +34,21 @@ type SessionFilter struct {
 type sessionList struct {
 	mutex sync.Mutex
 	data  map[int64]*sessionWrap
+	list  []int64
 }
 
 func (s *sessionList) Add(w *sessionWrap) {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
 	s.data[w.SessionID] = w
+	s.list = append(s.list, w.SessionID)
 }
 
 func (s *sessionList) Delete(id int64) int {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
 	delete(s.data, id)
+	s.list = slicex.RemoveSliceItem(s.list, id)
 	return len(s.data)
 }
 
@@ -52,10 +56,11 @@ func (s *sessionList) Delete(id int64) int {
 // if we can not get the result, we can check user's all the session list
 // then we can send message use another session
 func (s *sessionList) GetList(filter *SessionFilter) ([]int64, []int64) {
+	if filter == nil {
+		return s.list, s.list
+	}
 	result := []int64{}
-	all := []int64{}
 	for _, v := range s.data {
-		all = append(all, v.SessionID)
 		if filter != nil {
 			if len(filter.ConnType) > 0 && v.ConnType != filter.ConnType {
 				continue
@@ -73,7 +78,7 @@ func (s *sessionList) GetList(filter *SessionFilter) ([]int64, []int64) {
 		result = append(result, v.SessionID)
 	}
 
-	return result, all
+	return result, s.list
 }
 
 type sessionWrap struct {
