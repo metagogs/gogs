@@ -61,20 +61,17 @@ func (s *sessionList) GetList(filter *SessionFilter) ([]int64, []int64) {
 	}
 	result := []int64{}
 	for _, v := range s.data {
-		if filter != nil {
-			if len(filter.ConnType) > 0 && v.ConnType != filter.ConnType {
-				continue
-			}
-
-			if len(filter.ConnName) > 0 && v.ConnName != filter.ConnName {
-				continue
-			}
-
-			if len(filter.ConnGroup) > 0 && v.ConnGroup != filter.ConnGroup {
-				continue
-			}
+		if len(filter.ConnType) > 0 && v.ConnType != filter.ConnType {
+			continue
 		}
 
+		if len(filter.ConnName) > 0 && v.ConnName != filter.ConnName {
+			continue
+		}
+
+		if len(filter.ConnGroup) > 0 && v.ConnGroup != filter.ConnGroup {
+			continue
+		}
 		result = append(result, v.SessionID)
 	}
 
