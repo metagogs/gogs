@@ -1,8 +1,10 @@
 package group
 
 import (
+	"sync"
 	"testing"
 
+	"github.com/metagogs/gogs/utils/randstr"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -64,4 +66,28 @@ func TestMemoryGroup_AddUser(t *testing.T) {
 	exist = memGroup.ContainsUser(nil, "test2")
 	assert.True(t, exist)
 
+	var wg sync.WaitGroup
+	for i := 0; i < 1000; i++ {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			memGroup.AddUser(nil, randstr.RandStr(10))
+			memGroup.AddUser(nil, "test")
+			memGroup.GetUsers(nil)
+			memGroup.GetUserCount(nil)
+			memGroup.GetGroupID(nil)
+			memGroup.GetGroupName(nil)
+			memGroup.ContainsUser(nil, "test")
+			memGroup.ContainsUser(nil, "test2")
+			memGroup.RemoveUser(nil, "test")
+			memGroup.RemoveUsers(nil, []string{"test2"})
+			memGroup.RemoveAllUsers(nil)
+			memGroup.AddUser(nil, randstr.RandStr(10))
+			memGroup.AddUser(nil, "test")
+			memGroup.GetUsers(nil)
+			memGroup.GetUserCount(nil)
+			memGroup.RemoveAllUsers(nil)
+		}()
+	}
+	wg.Wait()
 }

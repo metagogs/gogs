@@ -4,13 +4,17 @@ import (
 	"context"
 	"sync"
 	"time"
+
+	"github.com/metagogs/gogs/utils/slicex"
 )
 
 var _ Group = (*MemoryGroup)(nil)
 
 type MemoryGroup struct {
+	mutex       sync.RWMutex
 	name        string
-	uids        sync.Map
+	uids        map[string]struct{}
+	uidsList    []string
 	groupID     int64
 	lastRefresh int64
 }
@@ -19,13 +23,17 @@ func NewMemoryGroup(name string, groupID int64) *MemoryGroup {
 	return &MemoryGroup{
 		name:        name,
 		groupID:     groupID,
+		uids:        make(map[string]struct{}),
 		lastRefresh: time.Now().Unix(),
 	}
 }
 
 func (group *MemoryGroup) AddUser(ctx context.Context, uid string) error {
-	if _, ok := group.uids.Load(uid); !ok {
-		group.uids.Store(uid, uid)
+	group.mutex.Lock()
+	defer group.mutex.Unlock()
+	if _, ok := group.uids[uid]; !ok {
+		group.uids[uid] = struct{}{}
+		group.uidsList = append(group.uidsList, uid)
 		group.lastRefresh = time.Now().Unix()
 		return nil
 	}
@@ -34,8 +42,11 @@ func (group *MemoryGroup) AddUser(ctx context.Context, uid string) error {
 }
 
 func (group *MemoryGroup) RemoveUser(ctx context.Context, uid string) error {
-	if _, ok := group.uids.Load(uid); ok {
-		group.uids.Delete(uid)
+	group.mutex.Lock()
+	defer group.mutex.Unlock()
+	if _, ok := group.uids[uid]; ok {
+		delete(group.uids, uid)
+		group.uidsList = slicex.RemoveSliceItem(group.uidsList, uid)
 		group.lastRefresh = time.Now().Unix()
 		return nil
 	}
@@ -51,31 +62,20 @@ func (group *MemoryGroup) RemoveUsers(ctx context.Context, uids []string) {
 }
 
 func (group *MemoryGroup) RemoveAllUsers(ctx context.Context) {
-	group.uids.Range(func(key, value interface{}) bool {
-		group.uids.Delete(key)
-		group.lastRefresh = time.Now().Unix()
-		return true
-	})
+	group.mutex.Lock()
+	defer group.mutex.Unlock()
+	group.uids = make(map[string]struct{})
+	group.uidsList = nil
 }
 
 func (group *MemoryGroup) GetUsers(ctx context.Context) []string {
-	uids := []string{}
-	group.uids.Range(func(key, value interface{}) bool {
-		uids = append(uids, key.(string))
-		return true
-	})
-
-	return uids
+	group.mutex.RLock()
+	defer group.mutex.RUnlock()
+	return group.uidsList
 }
 
 func (group *MemoryGroup) GetUserCount(ctx context.Context) int {
-	count := 0
-	group.uids.Range(func(key, value interface{}) bool {
-		count++
-		return true
-	})
-
-	return count
+	return len(group.uidsList)
 }
 
 func (group *MemoryGroup) GetLastRefresh(ctx context.Context) int64 {
@@ -83,7 +83,9 @@ func (group *MemoryGroup) GetLastRefresh(ctx context.Context) int64 {
 }
 
 func (group *MemoryGroup) ContainsUser(ctx context.Context, uid string) bool {
-	_, ok := group.uids.Load(uid)
+	group.mutex.RLock()
+	defer group.mutex.RUnlock()
+	_, ok := group.uids[uid]
 	return ok
 }
 
