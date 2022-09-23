@@ -7,6 +7,8 @@ import (
 	"path/filepath"
 	"strings"
 	"text/template"
+
+	nameUtil "github.com/metagogs/gogs/utils/name"
 )
 
 const regularPerm = 0o666
@@ -26,8 +28,9 @@ func With(name string) *DefaultTemplate {
 		name: name,
 	}
 	d.funcMap = template.FuncMap{
-		"ToUpper": strings.ToUpper,
-		"ToLower": strings.ToLower,
+		"ToUpper":   strings.ToUpper,
+		"ToLower":   strings.ToLower,
+		"CamelCase": nameUtil.CamelCase,
 	}
 	return d
 }

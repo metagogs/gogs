@@ -11,13 +11,13 @@ import (
 )
 
 func init() {
-	RootCmd.AddCommand(protoCmd)
-	protoCmd.Flags().StringVarP(&protoFile, "file", "f", "", "proto文件")
+	RootCmd.AddCommand(csharpCmd)
+	csharpCmd.Flags().StringVarP(&protoFile, "file", "f", "", "proto文件")
 }
 
-var protoCmd = &cobra.Command{
-	Use:   "go",
-	Short: "generate gogs code",
+var csharpCmd = &cobra.Command{
+	Use:   "csharp",
+	Short: "generate csharp code",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(protoFile) == 0 {
