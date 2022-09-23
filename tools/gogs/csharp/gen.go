@@ -45,27 +45,31 @@ type CSharpGen struct {
 	Home        string
 	logicPath   []string
 	debugNoPb   bool
+	onlyCode    bool //just generate code by proto exinclude gogs
 }
 
-func NewCSharpGen(proto string, basePackage string) (*CSharpGen, error) {
+func NewCSharpGen(proto string, onlyCode bool) (*CSharpGen, error) {
 	protoPrase, err := protoparse.NewProtoParser().Parse(proto)
 	if err != nil {
 		return nil, err
 	}
 	return &CSharpGen{
-		protoFile:   proto,
-		proto:       protoPrase,
-		messages:    make(map[string]protoparse.Message),
-		basePackage: basePackage,
+		protoFile: proto,
+		proto:     protoPrase,
+		messages:  make(map[string]protoparse.Message),
+		onlyCode:  onlyCode,
 	}, nil
 }
 
 func (g *CSharpGen) Generate() error {
 	g.init()
 
-	if err := g.gogs(); err != nil {
-		return err
+	if g.onlyCode {
+		if err := g.gogs(); err != nil {
+			return err
+		}
 	}
+
 	if err := g.register(); err != nil {
 		return err
 	}
@@ -164,13 +168,13 @@ func (g *CSharpGen) gogs() error {
 }
 
 func (g *CSharpGen) register() error {
-	out := "."
+	out := "Model"
 	if len(g.Home) > 0 {
-		out = g.Home
+		out = g.Home + "Model"
 	}
 	if !g.debugNoPb {
-		os.MkdirAll(out+"Model", os.ModePerm)
-		protocCmd := fmt.Sprintf("protoc --csharp_out=%s %s", out+"Model", g.protoFile)
+		os.MkdirAll(out, os.ModePerm)
+		protocCmd := fmt.Sprintf("protoc --csharp_out=%s %s", out, g.protoFile)
 		if _, err := execx.Exec(protocCmd); err != nil {
 			fmt.Println(err.Error())
 			pterm.Error.Println("run protoc error " + err.Error())

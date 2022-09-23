@@ -4,15 +4,15 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/metagogs/gogs/tools/gogs/gen"
-	"github.com/metagogs/gogs/utils/gomod"
+	"github.com/metagogs/gogs/tools/gogs/csharp"
 	"github.com/pterm/pterm"
 	"github.com/spf13/cobra"
 )
 
 func init() {
 	RootCmd.AddCommand(csharpCmd)
-	csharpCmd.Flags().StringVarP(&protoFile, "file", "f", "", "proto文件")
+	csharpCmd.Flags().StringVarP(&protoFile, "file", "f", "", "proto file")
+	csharpCmd.Flags().BoolVarP(&gogsFiles, "gogs", "g", false, "should generate gogs framework code")
 }
 
 var csharpCmd = &cobra.Command{
@@ -24,21 +24,9 @@ var csharpCmd = &cobra.Command{
 			pterm.Error.Printfln("proto file is empty")
 			os.Exit(1)
 		}
-		if _, err := os.Stat("go.mod"); err != nil {
-			pterm.Error.Printfln("go.mod not found")
-			os.Exit(1)
-		}
-		goModule, err := gomod.GetMod()
-		if err != nil {
-			pterm.Error.Printfln("get go mod error: " + err.Error())
-			os.Exit(1)
-		}
-		if !goModule.IsInGoMod() {
-			pterm.Error.Printfln("not in go mod mode")
-			os.Exit(1)
-		}
 
-		gen, err := gen.NewGen(protoFile, goModule.Path)
+		fmt.Println(gogsFiles)
+		gen, err := csharp.NewCSharpGen(protoFile, gogsFiles)
 		if err != nil {
 			fmt.Println(err)
 		}
