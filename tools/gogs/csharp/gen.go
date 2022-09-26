@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/emicklei/proto"
+	"github.com/metagogs/gogs"
 	"github.com/metagogs/gogs/packet"
 	"github.com/metagogs/gogs/tools/gogs/csharp/gentemplate"
 	"github.com/metagogs/gogs/tools/gogs/protoparse"
@@ -139,27 +140,30 @@ func (g *CSharpGen) parseComponent(component *proto.NormalField) *Component {
 }
 
 func (g *CSharpGen) gogs() error {
-	if err := templatex.With("gogs").Parse(gentemplate.CodecTpl).SaveTo(nil, g.Home+"Gogs/Codec.cs", true); err != nil {
+	data := map[string]interface{}{}
+	data["Version"] = gogs.Version
+
+	if err := templatex.With("gogs").Parse(gentemplate.CodecTpl).SaveTo(data, g.Home+"Gogs/Codec.cs", true); err != nil {
 		pterm.Error.Printfln("generate file error Gogs/Codec.cs:" + err.Error())
 		return err
 	}
-	if err := templatex.With("gogs").Parse(gentemplate.CommonTpl).SaveTo(nil, g.Home+"Gogs/Common.cs", true); err != nil {
+	if err := templatex.With("gogs").Parse(gentemplate.CommonTpl).SaveTo(data, g.Home+"Gogs/Common.cs", true); err != nil {
 		pterm.Error.Printfln("generate file error Gogs/Common.cs:" + err.Error())
 		return err
 	}
-	if err := templatex.With("gogs").Parse(gentemplate.EventsManagerTpl).SaveTo(nil, g.Home+"Gogs/EventsManager.cs", true); err != nil {
+	if err := templatex.With("gogs").Parse(gentemplate.EventsManagerTpl).SaveTo(data, g.Home+"Gogs/EventsManager.cs", true); err != nil {
 		pterm.Error.Printfln("generate file error Gogs/EventsManager.cs:" + err.Error())
 		return err
 	}
-	if err := templatex.With("gogs").Parse(gentemplate.ICodecTpl).SaveTo(nil, g.Home+"Gogs/ICodec.cs", true); err != nil {
+	if err := templatex.With("gogs").Parse(gentemplate.ICodecTpl).SaveTo(data, g.Home+"Gogs/ICodec.cs", true); err != nil {
 		pterm.Error.Printfln("generate file error Gogs/ICodec.cs:" + err.Error())
 		return err
 	}
-	if err := templatex.With("gogs").Parse(gentemplate.MessagesTpl).SaveTo(nil, g.Home+"Gogs/Messages.cs", true); err != nil {
+	if err := templatex.With("gogs").Parse(gentemplate.MessagesTpl).SaveTo(data, g.Home+"Gogs/Messages.cs", true); err != nil {
 		pterm.Error.Printfln("generate file error Gogs/Messages.cs:" + err.Error())
 		return err
 	}
-	if err := templatex.With("gogs").Parse(gentemplate.PacketTpl).SaveTo(nil, g.Home+"Gogs/Packet.cs", true); err != nil {
+	if err := templatex.With("gogs").Parse(gentemplate.PacketTpl).SaveTo(data, g.Home+"Gogs/Packet.cs", true); err != nil {
 		pterm.Error.Printfln("generate file error Gogs/Packet.cs:" + err.Error())
 		return err
 	}
@@ -186,6 +190,7 @@ func (g *CSharpGen) register() error {
 	data := map[string]interface{}{}
 	data["Package"] = g.proto.PbPackage
 	data["Components"] = g.componets.Components
+	data["Version"] = gogs.Version
 
 	if err := templatex.With("gogs").Parse(gentemplate.RegisterTpl).SaveTo(data, g.Home+"Model/Register.cs", true); err != nil {
 		pterm.Error.Printfln("generate file error Model/Register.cs:" + err.Error())
