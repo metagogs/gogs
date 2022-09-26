@@ -10,13 +10,9 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-	protoFile string
-)
-
 func init() {
 	RootCmd.AddCommand(protoCmd)
-	protoCmd.Flags().StringVarP(&protoFile, "file", "f", "", "proto文件")
+	protoCmd.Flags().StringVarP(&protoFile, "file", "f", "", "proto file")
 }
 
 var protoCmd = &cobra.Command{
