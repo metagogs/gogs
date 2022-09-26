@@ -173,7 +173,7 @@ func (g *CSharpGen) register() error {
 		out = g.Home + "Model"
 	}
 	if !g.debugNoPb {
-		os.MkdirAll(out, os.ModePerm)
+		_ = os.MkdirAll(out, os.ModePerm)
 		protocCmd := fmt.Sprintf("protoc --csharp_out=%s %s", out, g.protoFile)
 		if _, err := execx.Exec(protocCmd); err != nil {
 			fmt.Println(err.Error())
