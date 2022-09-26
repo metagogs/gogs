@@ -30,6 +30,7 @@ func TestNewGen(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			g, err := NewCSharpGen(tt.args.proto, tt.args.onlyCode)
 			g.Home = "test/"
+			g.debugNoPb = true
 			if (err != nil) != tt.wantErr {
 				t.Errorf("NewGen() error = %v, wantErr %v", err, tt.wantErr)
 				return
