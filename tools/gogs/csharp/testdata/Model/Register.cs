@@ -53,12 +53,12 @@ namespace Model
             Gogs.EventsManager.AddListener<Ping>(action);
         }
         
-        public static void OnLoginSuccess(Action<string, BindUser> action)
+        public static void OnBindUser(Action<string, BindUser> action)
         {
             Gogs.EventsManager.AddListener<BindUser>(action);
         }
         
-        public static void OnLoginSuccess(Action<string, BindSuccess> action)
+        public static void OnBindSuccess(Action<string, BindSuccess> action)
         {
             Gogs.EventsManager.AddListener<BindSuccess>(action);
         }

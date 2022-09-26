@@ -9,8 +9,8 @@ import (
 
 func TestNewGen(t *testing.T) {
 	type args struct {
-		proto       string
-		basePackage string
+		proto    string
+		onlyCode bool
 	}
 	tests := []struct {
 		name    string
@@ -20,15 +20,15 @@ func TestNewGen(t *testing.T) {
 		{
 			name: "new gen",
 			args: args{
-				proto:       "testdata/data.proto",
-				basePackage: "github.com/metagogs/test",
+				proto:    "testdata/data.proto",
+				onlyCode: false,
 			},
 			wantErr: false,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			g, err := NewCSharpGen(tt.args.proto, tt.args.basePackage)
+			g, err := NewCSharpGen(tt.args.proto, tt.args.onlyCode)
 			g.Home = "test/"
 			if (err != nil) != tt.wantErr {
 				t.Errorf("NewGen() error = %v, wantErr %v", err, tt.wantErr)

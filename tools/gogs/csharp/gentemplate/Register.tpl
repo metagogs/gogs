@@ -51,7 +51,7 @@ namespace {{.Package | CamelCase }}
             Gogs.EventsManager.AddListener<Ping>(action);
         }
         {{range .Components}}{{range .Fields}}
-        public static void OnLoginSuccess(Action<string, {{.Name}}> action)
+        public static void On{{.Name}}(Action<string, {{.Name}}> action)
         {
             Gogs.EventsManager.AddListener<{{.Name}}>(action);
         }
