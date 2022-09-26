@@ -119,9 +119,6 @@ func TestWebRTC(t *testing.T) {
 		assert.EqualValues(t, []byte("world"), msg)
 	}
 
-	err = peerConnection.Close()
-	assert.Nil(t, err)
-
 	err = serverConn.Close()
 	assert.Nil(t, err)
 
