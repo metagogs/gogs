@@ -1,7 +1,6 @@
 package agent
 
 import (
-	"fmt"
 	"net"
 	"strconv"
 	"sync"
@@ -130,7 +129,6 @@ func (a *Agent) heartbeat() {
 	for {
 		select {
 		case <-ticker.C:
-			fmt.Println("send ping")
 			if a.heartbeatLog {
 				deadline := time.Now().Add(-2 * a.heartbeatTimeout).Unix()
 				if atomic.LoadInt64(&a.lastAt) < deadline {
