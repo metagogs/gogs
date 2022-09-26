@@ -19,7 +19,7 @@ gogs is a simple, fast and lightweight game server framework written in golang. 
 
 ## TODO
 - [ ] Support metrics
-- [ ] Support generate Unity C# SDK
+- [x] Support generate Unity C# SDK
 - [ ] Support generate JS SDK
 - [ ] Support Remote call
 - [ ] Support tracing
