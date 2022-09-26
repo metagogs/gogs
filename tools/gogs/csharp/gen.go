@@ -143,23 +143,23 @@ func (g *CSharpGen) gogs() error {
 		pterm.Error.Printfln("generate file error Gogs/Codec.cs:" + err.Error())
 		return err
 	}
-	if err := templatex.With("gogs").Parse(gentemplate.CodecTpl).SaveTo(nil, g.Home+"Gogs/Common.cs", true); err != nil {
+	if err := templatex.With("gogs").Parse(gentemplate.CommonTpl).SaveTo(nil, g.Home+"Gogs/Common.cs", true); err != nil {
 		pterm.Error.Printfln("generate file error Gogs/Common.cs:" + err.Error())
 		return err
 	}
-	if err := templatex.With("gogs").Parse(gentemplate.CodecTpl).SaveTo(nil, g.Home+"Gogs/EventsManager.cs", true); err != nil {
+	if err := templatex.With("gogs").Parse(gentemplate.EventsManagerTpl).SaveTo(nil, g.Home+"Gogs/EventsManager.cs", true); err != nil {
 		pterm.Error.Printfln("generate file error Gogs/EventsManager.cs:" + err.Error())
 		return err
 	}
-	if err := templatex.With("gogs").Parse(gentemplate.CodecTpl).SaveTo(nil, g.Home+"Gogs/ICodec.cs", true); err != nil {
+	if err := templatex.With("gogs").Parse(gentemplate.ICodecTpl).SaveTo(nil, g.Home+"Gogs/ICodec.cs", true); err != nil {
 		pterm.Error.Printfln("generate file error Gogs/ICodec.cs:" + err.Error())
 		return err
 	}
-	if err := templatex.With("gogs").Parse(gentemplate.CodecTpl).SaveTo(nil, g.Home+"Gogs/Messages.cs", true); err != nil {
+	if err := templatex.With("gogs").Parse(gentemplate.MessagesTpl).SaveTo(nil, g.Home+"Gogs/Messages.cs", true); err != nil {
 		pterm.Error.Printfln("generate file error Gogs/Messages.cs:" + err.Error())
 		return err
 	}
-	if err := templatex.With("gogs").Parse(gentemplate.CodecTpl).SaveTo(nil, g.Home+"Gogs/Packet.cs", true); err != nil {
+	if err := templatex.With("gogs").Parse(gentemplate.PacketTpl).SaveTo(nil, g.Home+"Gogs/Packet.cs", true); err != nil {
 		pterm.Error.Printfln("generate file error Gogs/Packet.cs:" + err.Error())
 		return err
 	}
