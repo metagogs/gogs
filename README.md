@@ -19,7 +19,7 @@ gogs is a simple, fast and lightweight game server framework written in golang. 
 
 ## TODO
 - [ ] Support metrics
-- [ ] Support generate Unity C# SDK
+- [x] Support generate Unity C# SDK
 - [ ] Support generate JS SDK
 - [ ] Support Remote call
 - [ ] Support tracing
@@ -48,10 +48,16 @@ init project
 mkdir yourgame
 cd yourgame
 gogs init -p yourgame
+
+Flags:
+ -p your go package name
 ```
 edit your proto, add the game message, then generate the code
 ```
 gogs go -f data.proto
+
+Flags:
+ -f proto file path
 ```
 run your game server
 ```
@@ -74,6 +80,16 @@ model/
 config.yaml     
 data.proto      
 main.go
+```
+
+### Generated Unity C# Code
+this will generate a unity code, you can use it to test your game server. And you need use the [Unity Protobuf](./unity) to run the code.
+```
+ gogs csharp -f data.proto
+
+ Flags:
+ -f proto file path
+ -g generate unity c# gogs library, you should use it when you generate code first time
 ```
 
 ## How to encode/decode the message
