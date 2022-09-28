@@ -24,7 +24,7 @@ gogs is a simple, fast and lightweight game server framework written in golang. 
 - [ ] Support Remote call
 - [ ] Support tracing
 - [x] Support gogs generate docker file
-- [ ] Support gogs generate k8s yaml
+- [x] Support gogs generate k8s yaml
 - [ ] Support custom game packet protocol
 - [ ] Support kubegame controller, create game pod with api
 - [ ] Add more examples
@@ -41,7 +41,7 @@ gogs is a simple, fast and lightweight game server framework written in golang. 
 ### Init your project
 install the gogs
 ```
-go install github.com/metagogs/gogs/tools/gogs@v0.1.0
+go install github.com/metagogs/gogs/tools/gogs@v0.1.2
 ```
 init project
 ```
@@ -90,6 +90,16 @@ this will generate a unity code, you can use it to test your game server. And yo
  Flags:
  -f proto file path
  -g generate unity c# gogs library, you should use it when you generate code first time
+```
+
+### Deployment
+```
+gogo docker // generate Dockerfile
+
+go run main --deployment // generate k8s yaml
+--svc use service to expose your game server not hostport
+--name your game server name
+--namepsace your k8s namespace
 ```
 
 ## How to encode/decode the message
