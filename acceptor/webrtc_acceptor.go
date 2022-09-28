@@ -39,6 +39,10 @@ func NewWebRTCAcceptor(config *AcceptroConfig) *WebRTCAcceptor {
 	}
 }
 
+func (w *WebRTCAcceptor) GetConfig() *AcceptroConfig {
+	return w.config
+}
+
 func (w *WebRTCAcceptor) GetName() string {
 	return w.config.Name
 }

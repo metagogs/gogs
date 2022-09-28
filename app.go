@@ -14,6 +14,7 @@ import (
 	"github.com/metagogs/gogs/agent"
 	"github.com/metagogs/gogs/component"
 	"github.com/metagogs/gogs/config"
+	"github.com/metagogs/gogs/deployment"
 	"github.com/metagogs/gogs/global"
 	"github.com/metagogs/gogs/group"
 	"github.com/metagogs/gogs/gslog"
@@ -124,10 +125,18 @@ func (app *App) Helper() *appHelper {
 }
 
 func (app *App) Start() {
-	deployment := flag.Bool("deployment", false, "deployment mode")
+	deploymentFlag := flag.Bool("deployment", false, "deployment mode")
+	deploymentScv := flag.Bool("svc", false, "use the k8s svc")
+	deploymentName := flag.String("name", "", "deployment name")
+	deploymentSpace := flag.String("namespace", "", "deployment namespace")
 	flag.Parse()
-	if *deployment {
-		// deployment mode
+	if *deploymentFlag {
+		deploymentHelper := deployment.NewDeploymentHelper(app.Config, *deploymentScv, *deploymentName, *deploymentSpace)
+		for _, acc := range app.acceptors {
+			deploymentHelper.AddAcceptor(acc.GetConfig())
+		}
+		// generate deployment file
+		_ = deploymentHelper.Generate()
 		return
 	}
 

@@ -7,7 +7,6 @@ type AcceptroConfig struct {
 	Groups   []*AcceptorGroupConfig // the groups of the acceptor
 	Type     string                 // the type of the acceptor
 	HttpPort int
-	TcpPort  int
 	UdpPort  int
 }
 

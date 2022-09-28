@@ -25,6 +25,7 @@ type AcceptorConn interface {
 
 // Acceptor type interface
 type Acceptor interface {
+	GetConfig() *AcceptroConfig     // get the config
 	ListenAndServe()                // listen and serve
 	Stop()                          // stop the acceptor
 	GetConnChan() chan AcceptorConn // get the conn channel
