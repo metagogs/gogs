@@ -38,6 +38,10 @@ func NewWSAcceptror(config *AcceptroConfig) *WSAcceptor {
 	}
 }
 
+func (w *WSAcceptor) GetConfig() *AcceptroConfig {
+	return w.config
+}
+
 func (w *WSAcceptor) GetName() string {
 	return w.config.Name
 }

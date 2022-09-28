@@ -12,7 +12,7 @@ type Config struct {
 	Debug       bool // debug mode
 	Gopprof     bool // start pprof
 	GopprofAddr int  // the pprof server http port
-	AdminPort   int  // admin server http port
+	AdminPort   int  // admin server http port and used for health check
 
 	AgentMessageBufferSize int  // agent message buffer size
 	AgentHeartBeatTimeout  int  // agent heartbeat timeout, second
