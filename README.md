@@ -23,7 +23,7 @@ gogs is a simple, fast and lightweight game server framework written in golang. 
 - [ ] Support generate JS SDK
 - [ ] Support Remote call
 - [ ] Support tracing
-- [ ] Support gogs generate docker file
+- [x] Support gogs generate docker file
 - [ ] Support gogs generate k8s yaml
 - [ ] Support custom game packet protocol
 - [ ] Support kubegame controller, create game pod with api
