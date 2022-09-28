@@ -1,6 +1,7 @@
 package gogs
 
 import (
+	"flag"
 	"fmt"
 	"os"
 	"os/signal"
@@ -123,6 +124,13 @@ func (app *App) Helper() *appHelper {
 }
 
 func (app *App) Start() {
+	deployment := flag.Bool("deployment", false, "deployment mode")
+	flag.Parse()
+	if *deployment {
+		// deployment mode
+		return
+	}
+
 	app.webServer.Start()   // 监听业务http服务，包含debug测试
 	app.adminServer.Start() // 启动内置admin服务，包含健康检测接口
 	app.listen()            // 服务监听
