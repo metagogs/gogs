@@ -88,8 +88,8 @@ func TestDeploymentHelper_Generate(t *testing.T) {
 				t.Errorf("DeploymentHelper.Generate() error = %v, wantErr %v", err, tt.wantErr)
 			}
 
-			if ok := filex.IsFileEqual("testdata/"+tt.name, "Deployment.yaml"); !ok {
-				t.Errorf("Init.Generate() error = %s is not equal to %s", "testdata/"+tt.name, "Deployment.yaml")
+			if ok := filex.IsFileEqual("testdata/"+tt.name, "deployment.yaml"); !ok {
+				t.Errorf("Init.Generate() error = %s is not equal to %s", "testdata/"+tt.name, "deployment.yaml")
 			}
 			_ = os.Remove("deployment.yaml")
 		})

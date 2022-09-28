@@ -71,7 +71,7 @@ func (d *DeploymentHelper) AddAcceptor(config *acceptor.AcceptroConfig) {
 }
 
 func (d *DeploymentHelper) Generate() error {
-	fileName := "Deployment.yaml"
+	fileName := "deployment.yaml"
 	if _, err := os.Stat(fileName); err == nil {
 		pterm.Error.Printfln(fileName + " already exists")
 		return nil
