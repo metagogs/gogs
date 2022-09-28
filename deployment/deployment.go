@@ -10,7 +10,7 @@ import (
 	"github.com/pterm/pterm"
 )
 
-//go:embed Deployment.tpl
+//go:embed deployment.tpl
 var DeploymentTpl string
 
 type DeploymentInfo struct {
