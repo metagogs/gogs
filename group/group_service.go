@@ -57,3 +57,13 @@ func (gs *GroupServer) DeleteUserByName(uid string) {
 		return true
 	})
 }
+
+func (gs *GroupServer) ListGroup() []Group {
+	list := []Group{}
+	gs.rooms.Range(func(key, value any) bool {
+		list = append(list, value.(Group))
+		return true
+	})
+
+	return list
+}
