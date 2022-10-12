@@ -13,6 +13,7 @@ import (
 func init() {
 	RootCmd.AddCommand(protoCmd)
 	protoCmd.Flags().StringVarP(&protoFile, "file", "f", "", "proto file")
+	protoCmd.Flags().StringVarP(&gopackage, "package", "p", "", "go package")
 }
 
 var protoCmd = &cobra.Command{
@@ -24,21 +25,26 @@ var protoCmd = &cobra.Command{
 			pterm.Error.Printfln("proto file is empty")
 			os.Exit(1)
 		}
-		if _, err := os.Stat("go.mod"); err != nil {
-			pterm.Error.Printfln("go.mod not found")
-			os.Exit(1)
-		}
-		goModule, err := gomod.GetMod()
-		if err != nil {
-			pterm.Error.Printfln("get go mod error: " + err.Error())
-			os.Exit(1)
-		}
-		if !goModule.IsInGoMod() {
-			pterm.Error.Printfln("not in go mod mode")
-			os.Exit(1)
+		goPackage := gopackage
+		if len(goPackage) == 0 {
+			if _, err := os.Stat("go.mod"); err != nil {
+				pterm.Error.Printfln("go.mod not found")
+				os.Exit(1)
+			}
+			goModule, err := gomod.GetMod()
+			if err != nil {
+				pterm.Error.Printfln("get go mod error: " + err.Error())
+				os.Exit(1)
+			}
+			if !goModule.IsInGoMod() {
+				pterm.Error.Printfln("not in go mod mode")
+				os.Exit(1)
+			}
+
+			goPackage = goModule.Path
 		}
 
-		gen, err := gen.NewGen(protoFile, goModule.Path)
+		gen, err := gen.NewGen(protoFile, goPackage)
 		if err != nil {
 			fmt.Println(err)
 		}

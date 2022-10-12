@@ -8,6 +8,7 @@ import (
 
 var (
 	gomodpath string
+	gopackage string
 )
 
 func init() {
