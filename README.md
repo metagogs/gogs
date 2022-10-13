@@ -44,7 +44,7 @@ gogs is a simple, fast and lightweight game server framework written in golang. 
 ### Init your project
 install the gogs
 ```
-go install github.com/metagogs/gogs/tools/gogs@v0.1.2
+go install github.com/metagogs/gogs/tools/gogs@v0.1.5
 ```
 init project
 ```
