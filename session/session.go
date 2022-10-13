@@ -78,6 +78,10 @@ func (sess *Session) SetOnCloseCallbacks(callbacks []func(id int64)) {
 	sess.OnCloseCallbacks = callbacks
 }
 
+func (sess *Session) SetOnCloseCallback(c func(id int64)) {
+	sess.OnCloseCallbacks = []func(id int64){c}
+}
+
 func (sess *Session) GetLatency() int64 {
 	return sess.agent.GetLatency()
 }
