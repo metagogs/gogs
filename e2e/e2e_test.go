@@ -16,8 +16,8 @@ import (
 
 var (
 	defaultConfig = config.NewConfig("default.yaml")
-	testClient    *client
-	testClient2   *client
+	testClient    *TestClient
+	testClient2   *TestClient
 	uid           string
 	uid2          string
 )
@@ -38,10 +38,10 @@ func TestSendConnectWS(t *testing.T) {
 	// wait for started
 	<-started
 	t.Log("websocket testing")
-	clients := []*client{}
+	clients := []*TestClient{}
 	// try to make 10 websocket client
 	for i := 0; i < 10; i++ {
-		client, err := newWSClinet("ws://127.0.0.1:8888/base")
+		client, err := NewWSClinet("ws://127.0.0.1:8888/base")
 		assert.Nil(t, err)
 		clients = append(clients, client)
 		defer client.Close()
@@ -73,7 +73,7 @@ func TestSendConnectWS(t *testing.T) {
 	var err error
 	t.Log("websocket message testing")
 	t.Log("user1 login")
-	testClient, err = newWSClinet("ws://127.0.0.1:8888/base")
+	testClient, err = NewWSClinet("ws://127.0.0.1:8888/base")
 	assert.Nil(t, err)
 	go testClient.Start(t)
 
@@ -88,7 +88,7 @@ func TestSendConnectWS(t *testing.T) {
 	select {
 	case <-time.After(1 * time.Second):
 		t.Fatal("server get the data timeout")
-	case msg := <-testClient.datas:
+	case msg := <-testClient.Datas:
 		assert.Equal(t, "hello world", string(msg))
 	}
 
@@ -99,7 +99,7 @@ func TestSendConnectWS(t *testing.T) {
 	joinWorld(t, testClient)
 
 	t.Log("user2 login")
-	testClient2, err = newWSClinet("ws://127.0.0.1:8888/base")
+	testClient2, err = NewWSClinet("ws://127.0.0.1:8888/base")
 	assert.Nil(t, err)
 	go testClient2.Start(t)
 
@@ -121,7 +121,7 @@ func TestSendConnectWS(t *testing.T) {
 	select {
 	case <-time.After(1 * time.Second):
 		t.Fatal("client get the JoinWorldNotify message timeout")
-	case msg := <-testClient.datas:
+	case msg := <-testClient.Datas:
 		t.Log("client get the JoinWorldNotify message")
 		p, err := testdata.TestApp.MessageServer.DecodeMessage(msg)
 		assert.Nil(t, err)
@@ -147,7 +147,7 @@ func TestSendConnectWS(t *testing.T) {
 	select {
 	case <-time.After(1 * time.Second):
 		t.Fatal("client get t he UpdateUserInWorld message timeout")
-	case msg := <-testClient2.datas:
+	case msg := <-testClient2.Datas:
 		t.Log("client get the UpdateUserInWorld message")
 		p, err := testdata.TestApp.MessageServer.DecodeMessage(msg)
 		assert.Nil(t, err)
@@ -165,7 +165,7 @@ func TestSendConnectWS(t *testing.T) {
 
 // bindUser when we create a client, we should send the BindUser message to th server
 // to bind the user to the connection. The servet should send the BindUserSuccess message to the client
-func bindUser(t *testing.T, sendClient *client, id string) {
+func bindUser(t *testing.T, sendClient *TestClient, id string) {
 	t.Helper()
 	t.Log("client send BindUser message")
 	err := sendClient.WriteMessage(websocket.BinaryMessage, encodeMessage(t, &game.BindUser{
@@ -183,7 +183,7 @@ func bindUser(t *testing.T, sendClient *client, id string) {
 	select {
 	case <-time.After(1 * time.Second):
 		t.Fatal("client get the BindSuccess message timeout")
-	case msg := <-sendClient.datas:
+	case msg := <-sendClient.Datas:
 		t.Log("client get the BindSuccess message success")
 		p, err := testdata.TestApp.MessageServer.DecodeMessage(msg)
 		assert.Nil(t, err)
@@ -194,7 +194,7 @@ func bindUser(t *testing.T, sendClient *client, id string) {
 
 // joinWorld user can send the JoinWorld message to the server to join the world
 // the server should send the JoinWorldSuccess message to the client
-func joinWorld(t *testing.T, sendClient *client) {
+func joinWorld(t *testing.T, sendClient *TestClient) {
 	t.Helper()
 	t.Log("client send JoinWorld message")
 	err := sendClient.WriteMessage(websocket.BinaryMessage, encodeMessage(t, &game.JoinWorld{
@@ -211,7 +211,7 @@ func joinWorld(t *testing.T, sendClient *client) {
 	select {
 	case <-time.After(1 * time.Second):
 		t.Fatal("client get the JoinWorldSuccess message timeout")
-	case msg := <-sendClient.datas:
+	case msg := <-sendClient.Datas:
 		t.Log("client get the JoinWorldSuccess message success")
 		p, err := testdata.TestApp.MessageServer.DecodeMessage(msg)
 		assert.Nil(t, err)

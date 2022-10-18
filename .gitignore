@@ -1,1 +1,4 @@
 coverage.out
+mem.pprof
+cpu.pprof
+trace.out

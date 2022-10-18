@@ -2,6 +2,7 @@ package baseworld
 
 import (
 	"context"
+	"strings"
 
 	"github.com/metagogs/gogs/e2e/testdata/fakeinternal/message"
 	"github.com/metagogs/gogs/e2e/testdata/fakeinternal/svc"
@@ -27,6 +28,9 @@ func NewBindUserLogic(ctx context.Context, svcCtx *svc.ServiceContext, sess *ses
 
 func (l *BindUserLogic) Handler(in *game.BindUser) {
 	BindUserHandler <- in
+	if strings.HasPrefix(in.Uid, "test_") {
+		l.svcCtx.PlayerManagaer.CreateUser(in.Uid, in.Uid)
+	}
 	player, ok := l.svcCtx.PlayerManagaer.GetPlayer(in.Uid)
 	if ok {
 		l.session.SetUID(in.Uid)
