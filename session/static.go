@@ -1,6 +1,8 @@
 package session
 
-import "github.com/metagogs/gogs/utils/slicex"
+import (
+	"github.com/metagogs/gogs/utils/slicex"
+)
 
 var DefaultSessionPool SessionPool
 
@@ -21,6 +23,12 @@ func SendMessageByID(sessionId int64, in interface{}) {
 	}
 }
 
+func SendDataByID(sessionId int64, in []byte) {
+	if sess, err := DefaultSessionPool.GetSessionByID(sessionId); err == nil {
+		sess.SendData(in)
+	}
+}
+
 func ListSessions() []*Session {
 	return DefaultSessionPool.ListSessions()
 }
@@ -34,6 +42,17 @@ func BroadcastMessage(users []string, send interface{}, filter *SessionFilter, e
 		}
 		if result, _ := GetSessionByUID(u, filter); len(result) > 0 {
 			SendMessageByID(result[0], send)
+		}
+	}
+}
+
+func BroadcastData(users []string, send []byte, filter *SessionFilter, exclude ...string) {
+	for _, u := range users {
+		if slicex.InSlice(u, exclude) {
+			continue
+		}
+		if result, _ := GetSessionByUID(u, filter); len(result) > 0 {
+			SendDataByID(result[0], send)
 		}
 	}
 }

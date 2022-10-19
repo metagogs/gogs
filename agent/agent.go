@@ -21,6 +21,7 @@ type Agent struct {
 	conn             acceptor.AcceptorConn       // the Conn
 	agentLog         *zap.Logger                 // logger
 	chSend           chan *bytebuffer.ByteBuffer // send message channel
+	chSendByte       chan []byte                 // send message byte channel
 	chStopWrite      chan struct{}               // close message send
 	chStopHeartbeat  chan struct{}               // close heartbeat
 	chDie            chan struct{}               // wait for close
@@ -108,6 +109,10 @@ func (a *Agent) write() {
 				return
 			}
 			bytebuffer.Put(msg)
+		case msg := <-a.chSendByte:
+			if _, err := a.conn.Write(msg); err != nil {
+				return
+			}
 		case <-a.chStopWrite:
 			return
 		}
@@ -179,10 +184,8 @@ func (a *Agent) Send(in interface{}, name ...string) error {
 }
 
 func (a *Agent) SendData(data []byte) {
-	b := bytebuffer.Get()
-	b.Set(data)
 	select {
-	case a.chSend <- b:
+	case a.chSendByte <- data:
 	case <-a.chDie:
 	}
 }
