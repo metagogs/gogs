@@ -16,17 +16,16 @@ import (
 	"github.com/tidwall/gjson"
 )
 
-func startServer(t *testing.T, config *config.Config) (context.CancelFunc, chan int) { //nolint
+func startServer(t *testing.T, config *config.Config) (context.CancelFunc, chan struct{}) { //nolint
 	defer func() {
 		if err := recover(); err != nil {
 			t.Fatal("start error", err)
 		}
 	}()
-	startTest := make(chan int)
+	startTest := make(chan struct{})
 	config.StaredCallback = func() {
-		start := time.After(1 * time.Second)
-		<-start
-		startTest <- 1
+		<-time.After(1 * time.Second)
+		startTest <- struct{}{}
 	}
 	t.Helper()
 	ctx, cancel := context.WithCancel(context.Background())
@@ -34,32 +33,42 @@ func startServer(t *testing.T, config *config.Config) (context.CancelFunc, chan 
 	return cancel, startTest
 }
 
-type client struct {
+type TestClient struct {
 	*websocket.Conn
-	datas chan []byte
+	Datas chan []byte
 }
 
-func (c *client) Start(t *testing.T) {
+func (c *TestClient) Start(t *testing.T) {
 	t.Helper()
 	for {
 		_, data, err := c.ReadMessage()
 		if err != nil {
 			break
 		}
-		c.datas <- data
+		c.Datas <- data
+
+	}
+}
+func (c *TestClient) Start2() {
+	for {
+		_, data, err := c.ReadMessage()
+		if err != nil {
+			break
+		}
+		c.Datas <- data
 
 	}
 }
 
-func newWSClinet(address string) (*client, error) { //nolint
+func NewWSClinet(address string) (*TestClient, error) { //nolint
 	conn, _, err := websocket.DefaultDialer.Dial(address, nil) //nolint
 	if err != nil {
 		return nil, err
 	}
 
-	return &client{
+	return &TestClient{
 		Conn:  conn,
-		datas: make(chan []byte),
+		Datas: make(chan []byte),
 	}, nil
 
 }

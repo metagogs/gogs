@@ -40,7 +40,7 @@ func NewBuilder(config *config.Config) *builder {
 func newSessionPool(config *config.Config) session.SessionPool {
 	// session池管理
 	appSessionPool := session.NewSessionPool(config)
-	session.DefaultSessionPool = appSessionPool
+	DefaultSessionPool = appSessionPool
 	return appSessionPool
 }
 
@@ -63,7 +63,9 @@ func newAdminServer(config *config.Config, sessionPool session.SessionPool, code
 }
 
 func newMessageServer(config *config.Config, codecHelper *codec.CodecHelper, dispatchServer *dispatch.DispatchServer) *message.MessageServer {
-	return message.NewMessageServer(codecHelper, dispatchServer)
+	messageServer := message.NewMessageServer(codecHelper, dispatchServer)
+	DefaultMessageServer = messageServer
+	return messageServer
 }
 
 func newWebServer(config *config.Config) *webserver.WebServer {

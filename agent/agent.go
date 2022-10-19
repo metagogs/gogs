@@ -9,6 +9,7 @@ import (
 
 	"github.com/metagogs/gogs/acceptor"
 	"github.com/metagogs/gogs/message"
+	"github.com/metagogs/gogs/packet"
 	"github.com/metagogs/gogs/proto"
 	"github.com/metagogs/gogs/session"
 	"github.com/metagogs/gogs/utils/bytebuffer"
@@ -181,6 +182,13 @@ func (a *Agent) Send(in interface{}, name ...string) error {
 	}
 
 	return nil
+}
+
+func (a *Agent) SendPacket(data *packet.Packet) {
+	select {
+	case a.chSend <- data.ToData():
+	case <-a.chDie:
+	}
 }
 
 func (a *Agent) SendData(data []byte) {
