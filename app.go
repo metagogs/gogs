@@ -71,6 +71,7 @@ func NewApp(config *config.Config) *App {
 		MessageServer: appBuidler.messageServer,
 		webServer:     appBuidler.webServer,
 	}
+	message.DefaultMessageServer = app.MessageServer
 
 	//初始化便捷服务
 	helper := newAppHelper(app)

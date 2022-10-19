@@ -60,6 +60,7 @@ func (af *AgentFacotry) NewAgent(conn acceptor.AcceptorConn) *Agent {
 		conn:             conn,
 		agentLog:         gslog.NewLog("agent").With(zap.Int64("agent_id", agentId)),
 		chSend:           make(chan *bytebuffer.ByteBuffer, af.messagesBufferSize),
+		chSendByte:       make(chan []byte, af.messagesBufferSize),
 		chStopWrite:      make(chan struct{}),
 		chStopHeartbeat:  make(chan struct{}),
 		chDie:            make(chan struct{}),

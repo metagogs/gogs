@@ -81,12 +81,30 @@ func (p *Packet) ToData() *bytebuffer.ByteBuffer {
 	}()
 
 	b := bytebuffer.Get()
-	if p.HeaderByte[0] == HeaderFlag {
+	if len(p.HeaderByte) > 0 && p.HeaderByte[0] == HeaderFlag {
 		_, _ = b.Write(p.HeaderByte)
 	}
 	_, _ = b.Write(p.Data)
 
 	return b
+}
+
+func (p *Packet) ToByte() []byte {
+	defer func() {
+		PutPacket(p)
+	}()
+
+	length := len(p.Data)
+	if len(p.HeaderByte) > 0 && p.HeaderByte[0] == HeaderFlag {
+		length += HeaderLength
+		data := make([]byte, length)
+		copy(data, p.HeaderByte)
+		copy(data[HeaderLength:], p.Data)
+		return data
+	}
+	data := make([]byte, length)
+	copy(data, p.Data)
+	return data
 }
 
 // packetType: 2bit  // 0x01: system, 0x02: service
