@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"os"
 	"runtime"
-	"runtime/debug"
 	"runtime/pprof"
 	"runtime/trace"
 	"strconv"
@@ -43,8 +42,9 @@ import (
 //	# MB globals scannable global size
 //	# P          number of processors used
 func main() {
-	debug.SetMemoryLimit(1 * 1024 * 1024 * 1024) // 1GB
-	debug.SetGCPercent(-1)
+	startTime := time.Now()
+	// debug.SetMemoryLimit(1 * 1024 * 1024 * 1024) // 1GB
+	// debug.SetGCPercent(-1)
 	global.GOGS_DISABLE_LOG = true
 	timeEnd := 30
 	cliens := 50
@@ -64,7 +64,6 @@ func main() {
 	serverConfig.AgentHeartBeatTimeout = 300
 
 	cancel, started := startServer(serverConfig)
-	defer cancel()
 	// use default encode proto
 	<-started
 	testdata.TestApp.UseDefaultEncodeProto()
@@ -98,12 +97,24 @@ func main() {
 	}
 
 	<-time.After(time.Duration(timeEnd) * time.Second)
-	fmt.Println("test time end")
+	fmt.Printf("test end, cost time %d \n", time.Since(startTime).Milliseconds())
 
-	runtime.GC()
 	fm, _ := os.Create("mem.pprof")
 	defer fm.Close()
 	_ = pprof.WriteHeapProfile(fm)
+
+	cancel()
+	//print system info
+	m := runtime.MemStats{}
+	runtime.ReadMemStats(&m)
+	fmt.Printf("Alloc %d\n", m.Alloc)
+	fmt.Printf("TotalAlloc %d\n", m.TotalAlloc)
+	fmt.Printf("Mallocs %d\n", m.Mallocs)
+	fmt.Printf("Frees %d\n", m.Frees)
+	fmt.Printf("HeapAlloc %d\n", m.HeapAlloc)
+	fmt.Printf("NumGC %d\n", m.NumGC)
+	fmt.Printf("NumForcedGC %d\n", m.NumForcedGC)
+	fmt.Printf("PauseTotalNs %dms\n", m.PauseTotalNs/1000/1000)
 }
 
 func run(client *e2e.TestClient) {
