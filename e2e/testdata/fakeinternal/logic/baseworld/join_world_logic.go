@@ -4,6 +4,7 @@ import (
 	"context"
 	"sync"
 
+	"github.com/metagogs/gogs"
 	"github.com/metagogs/gogs/e2e/testdata/fakeinternal/message"
 	"github.com/metagogs/gogs/e2e/testdata/fakeinternal/svc"
 	"github.com/metagogs/gogs/e2e/testdata/game"
@@ -61,5 +62,5 @@ func (l *JoinWorldLogic) Handler(in *game.JoinWorld) {
 	defer beanPool.Put(sendMsg)
 
 	uids := l.svcCtx.World.GetUsers(l.ctx)
-	session.BroadcastMessage(uids, sendMsg, nil, l.session.UID())
+	gogs.BroadcastMessage(uids, sendMsg, nil, l.session.UID())
 }

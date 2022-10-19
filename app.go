@@ -42,7 +42,6 @@ type App struct {
 	LatencyServer *latency.LatencyServer // 延时服务管理
 	GroupServer   *group.GroupServer     // 组管理
 
-	helper *appHelper //一些便捷操作
 	Config *config.Config
 }
 
@@ -71,11 +70,6 @@ func NewApp(config *config.Config) *App {
 		MessageServer: appBuidler.messageServer,
 		webServer:     appBuidler.webServer,
 	}
-	message.DefaultMessageServer = app.MessageServer
-
-	//初始化便捷服务
-	helper := newAppHelper(app)
-	app.helper = helper
 
 	system.RegisterSystemComponent(app.MessageServer, NewNetworkComponent(app))
 
@@ -119,10 +113,6 @@ func (app *App) UseDefaultEncodeJSONWithHeader() {
 
 func (app *App) RegisterWebHandler(port int, f func(gin *gin.Engine)) {
 	app.webServer.RegisterWebHandler(port, f)
-}
-
-func (app *App) Helper() *appHelper {
-	return app.helper
 }
 
 func (app *App) Start() {

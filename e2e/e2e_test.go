@@ -5,12 +5,12 @@ import (
 	"time"
 
 	"github.com/gorilla/websocket"
+	"github.com/metagogs/gogs"
 	"github.com/metagogs/gogs/config"
 	"github.com/metagogs/gogs/e2e/testdata"
 	"github.com/metagogs/gogs/e2e/testdata/fakeinternal/logic/baseworld"
 	"github.com/metagogs/gogs/e2e/testdata/game"
 	"github.com/metagogs/gogs/global"
-	"github.com/metagogs/gogs/session"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -80,7 +80,7 @@ func TestSendConnectWS(t *testing.T) {
 	<-time.After(1 * time.Second)
 
 	// the session pool should only have one session
-	sessions := session.ListSessions()
+	sessions := gogs.ListSessions()
 	assert.Equal(t, 1, len(sessions))
 
 	//test send data
@@ -106,7 +106,7 @@ func TestSendConnectWS(t *testing.T) {
 	<-time.After(1 * time.Second)
 
 	// with the two users logined, we should have to sessions
-	sessions = session.ListSessions()
+	sessions = gogs.ListSessions()
 	assert.Equal(t, 2, len(sessions))
 
 	uid2 = userLogin(t, "e2e2")

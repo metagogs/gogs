@@ -3,6 +3,7 @@ package session
 import (
 	"github.com/metagogs/gogs/acceptor"
 	"github.com/metagogs/gogs/networkentity"
+	"github.com/metagogs/gogs/packet"
 	"go.uber.org/zap"
 )
 
@@ -55,6 +56,10 @@ func (sess *Session) SendMessage(in interface{}, name ...string) error {
 
 func (sess *Session) SendData(data []byte) {
 	sess.agent.SendData(data)
+}
+
+func (sess *Session) SendPacket(data *packet.Packet) {
+	sess.agent.SendPacket(data)
 }
 
 func (sess *Session) GetLastTimeOnline() int64 {

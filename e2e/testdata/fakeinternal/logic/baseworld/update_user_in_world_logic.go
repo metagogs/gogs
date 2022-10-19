@@ -3,6 +3,7 @@ package baseworld
 import (
 	"context"
 
+	"github.com/metagogs/gogs"
 	"github.com/metagogs/gogs/e2e/testdata/fakeinternal/svc"
 	"github.com/metagogs/gogs/e2e/testdata/game"
 	"github.com/metagogs/gogs/session"
@@ -34,5 +35,8 @@ func (l *UpdateUserInWorldLogic) Handler(in *game.UpdateUserInWorld) {
 	//make sure uid is right
 	in.Uid = player.UID
 	uids := l.svcCtx.World.GetUsers(l.ctx)
-	session.BroadcastMessage(uids, in, nil, l.session.UID())
+
+	// broadcast to users with same message, encode the message in here to save time
+	// it avoid encode the message for every user
+	_ = gogs.BroadcastMessage(uids, in, nil, l.session.UID())
 }

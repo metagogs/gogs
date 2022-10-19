@@ -60,13 +60,16 @@ func main() {
 	defer trace.Stop()
 
 	serverConfig := &config.Config{}
-	serverConfig.Debug = true
+	serverConfig.Debug = false
 	serverConfig.AgentHeartBeatTimeout = 300
 
 	cancel, started := startServer(serverConfig)
 	// use default encode proto
 	<-started
 	testdata.TestApp.UseDefaultEncodeProto()
+	m := runtime.MemStats{}
+	runtime.ReadMemStats(&m)
+	initGC := m.NumGC
 
 	clients := []*e2e.TestClient{}
 	for i := 0; i < cliens; i++ {
@@ -105,7 +108,7 @@ func main() {
 
 	cancel()
 	//print system info
-	m := runtime.MemStats{}
+	m = runtime.MemStats{}
 	runtime.ReadMemStats(&m)
 	fmt.Printf("Alloc %d\n", m.Alloc)
 	fmt.Printf("TotalAlloc %d\n", m.TotalAlloc)
@@ -113,6 +116,7 @@ func main() {
 	fmt.Printf("Frees %d\n", m.Frees)
 	fmt.Printf("HeapAlloc %d\n", m.HeapAlloc)
 	fmt.Printf("NumGC %d\n", m.NumGC)
+	fmt.Printf("InitNumGC %d\n", initGC)
 	fmt.Printf("NumForcedGC %d\n", m.NumForcedGC)
 	fmt.Printf("PauseTotalNs %dms\n", m.PauseTotalNs/1000/1000)
 }
