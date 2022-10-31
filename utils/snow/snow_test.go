@@ -48,6 +48,7 @@ func Test_getNodeID(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			snowflake.NodeBits = 16
+			snowflake.StepBits = 6
 			sf, err := snowflake.NewNode(tt.nodeID)
 
 			if (err != nil) != tt.wantErr {
