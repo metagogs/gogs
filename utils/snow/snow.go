@@ -23,6 +23,7 @@ func getNodeID() int64 {
 func NewSnowNode() (*snowflake.Node, error) {
 	nodeID := getNodeID()
 	snowflake.NodeBits = 16
+	snowflake.StepBits = 6
 	sf, err := snowflake.NewNode(nodeID)
 	if err != nil {
 		return nil, err
