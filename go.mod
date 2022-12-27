@@ -15,7 +15,7 @@ require (
 	github.com/juju/ratelimit v1.0.2
 	github.com/pion/datachannel v1.5.5
 	github.com/pion/webrtc/v3 v3.1.50
-	github.com/pterm/pterm v0.12.50
+	github.com/pterm/pterm v0.12.51
 	github.com/spf13/cobra v1.6.1
 	github.com/spf13/viper v1.14.0
 	github.com/stretchr/testify v1.8.1
