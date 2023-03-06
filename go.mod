@@ -14,7 +14,7 @@ require (
 	github.com/gorilla/websocket v1.5.0
 	github.com/juju/ratelimit v1.0.2
 	github.com/pion/datachannel v1.5.5
-	github.com/pion/webrtc/v3 v3.1.56
+	github.com/pion/webrtc/v3 v3.1.57
 	github.com/pterm/pterm v0.12.54
 	github.com/spf13/cobra v1.6.1
 	github.com/spf13/viper v1.15.0
