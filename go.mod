@@ -14,7 +14,7 @@ require (
 	github.com/gorilla/websocket v1.5.0
 	github.com/juju/ratelimit v1.0.2
 	github.com/pion/datachannel v1.5.5
-	github.com/pion/webrtc/v3 v3.1.59
+	github.com/pion/webrtc/v3 v3.1.60
 	github.com/pterm/pterm v0.12.57
 	github.com/spf13/cobra v1.6.1
 	github.com/spf13/viper v1.15.0
@@ -83,9 +83,9 @@ require (
 	go.uber.org/multierr v1.8.0 // indirect
 	golang.org/x/arch v0.0.0-20220823144127-ada1728cebaa // indirect
 	golang.org/x/crypto v0.6.0 // indirect
-	golang.org/x/net v0.7.0 // indirect
+	golang.org/x/net v0.8.0 // indirect
 	golang.org/x/sys v0.6.0 // indirect
-	golang.org/x/term v0.5.0 // indirect
+	golang.org/x/term v0.6.0 // indirect
 	golang.org/x/text v0.8.0 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
