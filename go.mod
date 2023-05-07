@@ -5,7 +5,7 @@ go 1.19
 require (
 	github.com/bwmarrin/snowflake v0.3.0
 	github.com/bytedance/sonic v1.8.7
-	github.com/emicklei/proto v1.11.1
+	github.com/emicklei/proto v1.11.2
 	github.com/emirpasic/gods v1.18.1
 	github.com/ettle/strcase v0.1.1
 	github.com/gin-contrib/cors v1.4.0
