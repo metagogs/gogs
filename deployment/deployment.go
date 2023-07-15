@@ -51,7 +51,7 @@ func NewDeploymentHelper(config *config.Config, svc bool, name string, namespace
 	return d
 }
 
-func (d *DeploymentHelper) AddAcceptor(config *acceptor.AcceptroConfig) {
+func (d *DeploymentHelper) AddAcceptor(config *acceptor.AcceptorConfig) {
 	if config.UdpPort != 0 {
 		d.Infos = append(d.Infos, DeploymentInfo{
 			Name:     config.Name + "-udp",

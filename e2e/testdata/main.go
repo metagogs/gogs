@@ -23,7 +23,7 @@ func StartServer(closeCtx context.Context, config *config.Config) {
 		TestApp.Shutdown()
 	}()
 
-	TestApp.AddAcceptor(acceptor.NewWSAcceptror(&acceptor.AcceptroConfig{
+	TestApp.AddAcceptor(acceptor.NewWSAcceptor(&acceptor.AcceptorConfig{
 		HttpPort: 8888,
 		Name:     "base",
 		Groups: []*acceptor.AcceptorGroupConfig{
@@ -35,7 +35,7 @@ func StartServer(closeCtx context.Context, config *config.Config) {
 		},
 	}))
 
-	TestApp.AddAcceptor(acceptor.NewWebRTCAcceptor(&acceptor.AcceptroConfig{
+	TestApp.AddAcceptor(acceptor.NewWebRTCAcceptor(&acceptor.AcceptorConfig{
 		HttpPort: 8889,
 		UdpPort:  9001,
 		Name:     "world",

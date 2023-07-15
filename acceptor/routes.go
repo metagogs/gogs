@@ -2,7 +2,7 @@ package acceptor
 
 import "time"
 
-type AcceptroConfig struct {
+type AcceptorConfig struct {
 	Name     string                 // the name of the acceptor
 	Groups   []*AcceptorGroupConfig // the groups of the acceptor
 	Type     string                 // the type of the acceptor

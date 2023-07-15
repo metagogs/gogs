@@ -11,7 +11,7 @@ import (
 
 func TestWebSockets(t *testing.T) {
 	global.GOGS_DISABLE_LOG = true
-	acceptor := NewWSAcceptror(&AcceptroConfig{
+	acceptor := NewWSAcceptor(&AcceptorConfig{
 		Name:     "websockets",
 		HttpPort: 11003,
 		Groups: []*AcceptorGroupConfig{

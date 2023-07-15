@@ -17,12 +17,12 @@ type WSAcceptor struct {
 	connChan   chan AcceptorConn
 	listener   net.Listener
 	addr       int
-	config     *AcceptroConfig
+	config     *AcceptorConfig
 	state      int32
 	closeMutex sync.Mutex
 }
 
-func NewWSAcceptror(config *AcceptroConfig) *WSAcceptor {
+func NewWSAcceptor(config *AcceptorConfig) *WSAcceptor {
 	if len(config.Name) == 0 {
 		gslog.NewLog("ws_acceptor").Error("name length is 0")
 		os.Exit(1)
@@ -38,7 +38,7 @@ func NewWSAcceptror(config *AcceptroConfig) *WSAcceptor {
 	}
 }
 
-func (w *WSAcceptor) GetConfig() *AcceptroConfig {
+func (w *WSAcceptor) GetConfig() *AcceptorConfig {
 	return w.config
 }
 

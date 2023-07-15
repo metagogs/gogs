@@ -14,7 +14,7 @@ import (
 
 func TestWebRTC(t *testing.T) {
 	global.GOGS_DISABLE_LOG = true
-	acceptor := NewWebRTCAcceptor(&AcceptroConfig{
+	acceptor := NewWebRTCAcceptor(&AcceptorConfig{
 		Name:     "wertc",
 		HttpPort: 11001,
 		UdpPort:  11002,

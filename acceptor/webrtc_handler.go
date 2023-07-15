@@ -13,7 +13,7 @@ import (
 
 type webRTCConnHandler struct {
 	api       *webrtc.API
-	config    *AcceptroConfig
+	config    *AcceptorConfig
 	connChan  chan AcceptorConn
 	localAddr net.Addr
 	*zap.SugaredLogger

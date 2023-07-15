@@ -14,7 +14,7 @@ func main() {
 	config := config.NewConfig()
 
 	app := gogs.NewApp(config)
-	app.AddAcceptor(acceptor.NewWSAcceptror(&acceptor.AcceptroConfig{
+	app.AddAcceptor(acceptor.NewWSAcceptor(&acceptor.AcceptorConfig{
 		HttpPort: 8888,
 		Name:     "base",
 		Groups: []*acceptor.AcceptorGroupConfig{
@@ -24,7 +24,7 @@ func main() {
 		},
 	}))
 
-	app.AddAcceptor(acceptor.NewWebRTCAcceptor(&acceptor.AcceptroConfig{
+	app.AddAcceptor(acceptor.NewWebRTCAcceptor(&acceptor.AcceptorConfig{
 		HttpPort: 8889,
 		UdpPort:  9000,
 		Name:     "world",

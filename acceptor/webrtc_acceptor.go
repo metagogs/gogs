@@ -19,12 +19,12 @@ type WebRTCAcceptor struct {
 	httpListener net.Listener
 	udpListener  *net.UDPConn
 	api          *webrtc.API
-	config       *AcceptroConfig
+	config       *AcceptorConfig
 	state        int32
 	closeMutex   sync.Mutex
 }
 
-func NewWebRTCAcceptor(config *AcceptroConfig) *WebRTCAcceptor {
+func NewWebRTCAcceptor(config *AcceptorConfig) *WebRTCAcceptor {
 	if len(config.Name) == 0 {
 		gslog.NewLog("webrtc_acceptor").Error("name length is 0")
 		os.Exit(1)
@@ -39,7 +39,7 @@ func NewWebRTCAcceptor(config *AcceptroConfig) *WebRTCAcceptor {
 	}
 }
 
-func (w *WebRTCAcceptor) GetConfig() *AcceptroConfig {
+func (w *WebRTCAcceptor) GetConfig() *AcceptorConfig {
 	return w.config
 }
 
