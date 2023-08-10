@@ -19,7 +19,7 @@ func TestGroupServer_CreateMemoryGroup(t *testing.T) {
 	assert.False(t, exist)
 	assert.Nil(t, g)
 
-	groupServer.DeletGroup("test")
+	groupServer.DeleteGroup("test")
 	g, exist = groupServer.GetGroup("test")
 	assert.False(t, exist)
 	assert.Nil(t, g)

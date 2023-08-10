@@ -13,9 +13,9 @@ import (
 
 type ServiceContext struct {
 	*gogs.App
-	SF             *snowflake.Node
-	PlayerManagaer *player.PlayerManager
-	World          *group.MemoryGroup
+	SF            *snowflake.Node
+	PlayerManager *player.PlayerManager
+	World         *group.MemoryGroup
 }
 
 func NewServiceContext(app *gogs.App) *ServiceContext {
@@ -33,9 +33,9 @@ func NewServiceContext(app *gogs.App) *ServiceContext {
 	world := group.NewMemoryGroup("world", sf.Generate().Int64())
 
 	return &ServiceContext{
-		App:            app,
-		SF:             sf,
-		PlayerManagaer: pl,
-		World:          world,
+		App:           app,
+		SF:            sf,
+		PlayerManager: pl,
+		World:         world,
 	}
 }

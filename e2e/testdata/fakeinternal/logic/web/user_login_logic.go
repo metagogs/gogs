@@ -51,7 +51,7 @@ func (l *UserLoginLogic) Handler(c *gin.Context) {
 		UID: l.svcCtx.SF.Generate().String(),
 	}
 
-	l.svcCtx.PlayerManagaer.CreateUser(response.UID, msg.Username)
+	l.svcCtx.PlayerManager.CreateUser(response.UID, msg.Username)
 
 	c.JSON(http.StatusOK, gin.H{
 		"code": 200,

@@ -45,7 +45,7 @@ func (gs *GroupServer) GetGroup(name string) (Group, bool) {
 	return nil, false
 }
 
-func (gs *GroupServer) DeletGroup(name string) {
+func (gs *GroupServer) DeleteGroup(name string) {
 	gs.rooms.Delete(name)
 }
 

@@ -28,7 +28,7 @@ func (l *UpdateUserInWorldLogic) Handler(in *game.UpdateUserInWorld) {
 		return
 	}
 
-	player, exist := l.svcCtx.PlayerManagaer.GetPlayer(l.session.UID())
+	player, exist := l.svcCtx.PlayerManager.GetPlayer(l.session.UID())
 	if !exist {
 		return
 	}

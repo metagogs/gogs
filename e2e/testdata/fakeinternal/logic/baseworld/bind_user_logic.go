@@ -29,9 +29,9 @@ func NewBindUserLogic(ctx context.Context, svcCtx *svc.ServiceContext, sess *ses
 func (l *BindUserLogic) Handler(in *game.BindUser) {
 	BindUserHandler <- in
 	if strings.HasPrefix(in.Uid, "test_") {
-		l.svcCtx.PlayerManagaer.CreateUser(in.Uid, in.Uid)
+		l.svcCtx.PlayerManager.CreateUser(in.Uid, in.Uid)
 	}
-	player, ok := l.svcCtx.PlayerManagaer.GetPlayer(in.Uid)
+	player, ok := l.svcCtx.PlayerManager.GetPlayer(in.Uid)
 	if ok {
 		l.session.SetUID(in.Uid)
 		l.session.GetData().Set("name", player.Name)

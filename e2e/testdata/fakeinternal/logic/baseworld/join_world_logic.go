@@ -39,7 +39,7 @@ func (l *JoinWorldLogic) Handler(in *game.JoinWorld) {
 		return
 	}
 
-	player, exist := l.svcCtx.PlayerManagaer.GetPlayer(l.session.UID())
+	player, exist := l.svcCtx.PlayerManager.GetPlayer(l.session.UID())
 	if !exist {
 		return
 	}
