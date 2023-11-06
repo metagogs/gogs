@@ -7,7 +7,7 @@ require (
 	github.com/bytedance/sonic v1.10.2
 	github.com/emicklei/proto v1.12.2
 	github.com/emirpasic/gods v1.18.1
-	github.com/ettle/strcase v0.1.1
+	github.com/ettle/strcase v0.2.0
 	github.com/gin-contrib/cors v1.4.0
 	github.com/gin-gonic/gin v1.9.1
 	github.com/gogf/gf v1.16.9
