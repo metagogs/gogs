@@ -2,25 +2,25 @@ name: Go
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
     paths:
-      - '**.go'
-      - '**.tpl'
+      - "**.go"
+      - "**.tpl"
   pull_request:
-    branches: [ main ]
+    branches: [main]
     paths:
-      - '**.go'
-      - '**.tpl'
+      - "**.go"
+      - "**.tpl"
 
 jobs:
   test-linux:
     name: Linux
     runs-on: ubuntu-latest
     steps:
-      - name: Set up Go 1.19
+      - name: Set up Go 1.21.3
         uses: actions/setup-go@v2
         with:
-          go-version: 1.19.0
+          go-version: 1.21.3
         id: go
 
       - name: Check out code into the Go module directory
@@ -31,7 +31,7 @@ jobs:
           go get -v -t -d ./...
 
       - name: Test
-        run: go test -cover -coverpkg=./... -coverprofile coverage.out -covermode=count ./... --count=1 
+        run: go test -cover -coverpkg=./... -coverprofile coverage.out -covermode=count ./... --count=1
 
       - name: Codecov
         uses: codecov/codecov-action@v2
@@ -39,7 +39,7 @@ jobs:
       - name: Convert cover report
         run: |
           go tool cover -o coverage.html -html=coverage.out
-          
+
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3.0.0
         with:
@@ -58,8 +58,8 @@ jobs:
         uses: actions/setup-go@v3.0.0
         with:
           # The Go version to download (if necessary) and use. Supports semver spec and ranges.
-          go-version: 1.19 # optional
-          
+          go-version: 1.21.3 # optional
+
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v3
         with:
