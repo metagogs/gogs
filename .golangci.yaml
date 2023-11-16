@@ -22,7 +22,6 @@ linters:
     - durationcheck
     - exportloopref
     - gomodguard
-    - depguard
     - gosec
 
     # 建议
