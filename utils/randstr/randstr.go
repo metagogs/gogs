@@ -6,10 +6,6 @@ import (
 	"unsafe"
 )
 
-func init() {
-	rand.New(rand.NewSource(time.Now().UnixNano()))
-}
-
 const letterBytes = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 const (

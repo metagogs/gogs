@@ -2,7 +2,6 @@ package snow
 
 import (
 	"math/rand"
-	"time"
 
 	"github.com/bwmarrin/snowflake"
 )
@@ -11,7 +10,6 @@ func getNodeID() int64 {
 	var nodeID int64
 	ip, err := GetLocalIP()
 	if err != nil || len(ip) == 0 {
-		rand.New(rand.NewSource(time.Now().UnixNano()))
 		nodeID = rand.Int63n(2 << 14) //nolint
 	} else {
 		nodeID = IP4toInt16(ip)
