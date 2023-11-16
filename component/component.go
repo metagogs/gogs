@@ -20,21 +20,21 @@ type methodHandler func(srv interface{}, ctx context.Context, sess *session.Sess
 //	func() interface{} {
 //			return new(BindUser)
 //	}
-type filedHandler func() interface{}
+type fieldHandler func() interface{}
 
 type ComponentDesc struct {
-	ComonentName   string
-	ComponentIndex uint8       // equeal to module index
+	ComponentName  string
+	ComponentIndex uint8       // equal to module index
 	ComponentType  interface{} `json:"-"`
 	Methods        []ComponentMethodDesc
 }
 
 type ComponentMethodDesc struct {
-	MethodIndex uint32        // equeal to action index
-	MethodName  string        // equeal to action name
-	FieldType   reflect.Type  `json:"-"` // method field type to create field by reflect, but use the filedhandler is better
-	Handler     methodHandler `json:"-"` // method handler
-	FiledHanler filedHandler  `json:"-"` // method field handler, the handler function will be called to create field
+	MethodIndex  uint32        // equal to action index
+	MethodName   string        // equal to action name
+	FieldType    reflect.Type  `json:"-"` // method field type to create field by reflect, but use the filed handler is better
+	Handler      methodHandler `json:"-"` // method handler
+	FieldHandler fieldHandler  `json:"-"` // method field handler, the handler function will be called to create field
 }
 
 type Component interface{}

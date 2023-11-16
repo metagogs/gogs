@@ -28,7 +28,7 @@ func NewDispatchServer() *DispatchServer {
 }
 
 func (a *DispatchServer) RegisterComponent(sd component.ComponentDesc, ss interface{}) {
-	gslog.NewLog("server").Sugar().Infof("RegisterComponent: %s", sd.ComonentName)
+	gslog.NewLog("server").Sugar().Infof("RegisterComponent: %s", sd.ComponentName)
 	if ss != nil {
 		ht := reflect.TypeOf(sd.ComponentType).Elem()
 		st := reflect.TypeOf(ss)
@@ -51,7 +51,7 @@ func (a *DispatchServer) register(sd component.ComponentDesc, ss interface{}) {
 			srv:           ss,
 			componentDesc: &sd,
 			methodDesc:    d,
-			fieldHandler:  d.FiledHanler,
+			fieldHandler:  d.FieldHandler,
 		}
 		if d.FieldType.Kind() == reflect.Ptr {
 			serverMethod.fieldType = d.FieldType.Elem()

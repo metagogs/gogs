@@ -39,15 +39,15 @@ func _{{.ComponentName}}Component_{{.Name}}_Handler(srv interface{}, ctx context
 
 {{range .Components}}
 var _{{.Name}}ComponentDesc = component.ComponentDesc{
-	ComonentName:   "{{.Name}}Component",
-	ComponentIndex: {{.Index}}, // equeal to module index
+	ComponentName:   "{{.Name}}Component",
+	ComponentIndex: {{.Index}}, //  to module index
 	ComponentType:  (*Component)(nil),
 	Methods: []component.ComponentMethodDesc{
 		{{range .Fields}}{
 			MethodIndex: packet.CreateAction(packet.ServicePacket, {{.ComponentIndex}}, {{.Index}}), // {{.Action16}} {{.Action10}} 
 			FieldType:   reflect.TypeOf({{.Name}}{}),
 			{{if .ServerMessage}}Handler:     nil,{{else}}Handler:     _{{.ComponentName}}Component_{{.Name}}_Handler,{{end}}
-			FiledHanler: func() interface{} {
+			FieldHandler: func() interface{} {
 				return new({{.Name}})
 			},
 		},

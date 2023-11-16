@@ -24,15 +24,15 @@ func _NetworkComponent_Pong_Handler(srv interface{}, ctx context.Context, sess *
 }
 
 var _NetworkComponentDesc = component.ComponentDesc{
-	ComonentName:   "NetworkComponent",
-	ComponentIndex: 1, // equeal to module index
+	ComponentName:  "NetworkComponent",
+	ComponentIndex: 1, // equal to module index
 	ComponentType:  (*NetworkComponent)(nil),
 	Methods: []component.ComponentMethodDesc{
 		{
 			MethodIndex: packet.CreateAction(packet.SystemPacket, 1, 1),
 			FieldType:   reflect.TypeOf(proto.Ping{}),
 			Handler:     nil,
-			FiledHanler: func() interface{} {
+			FieldHandler: func() interface{} {
 				return new(proto.Ping)
 			},
 		},
@@ -40,7 +40,7 @@ var _NetworkComponentDesc = component.ComponentDesc{
 			MethodIndex: packet.CreateAction(packet.SystemPacket, 1, 2),
 			FieldType:   reflect.TypeOf(proto.Pong{}),
 			Handler:     _NetworkComponent_Pong_Handler,
-			FiledHanler: func() interface{} {
+			FieldHandler: func() interface{} {
 				return new(proto.Pong)
 			},
 		},

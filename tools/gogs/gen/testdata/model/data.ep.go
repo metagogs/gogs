@@ -29,15 +29,15 @@ func _BaseWorldComponent_BindUser_Handler(srv interface{}, ctx context.Context, 
 }
 
 var _BaseWorldComponentDesc = component.ComponentDesc{
-	ComonentName:   "BaseWorldComponent",
-	ComponentIndex: 1, // equeal to module index
+	ComponentName:   "BaseWorldComponent",
+	ComponentIndex: 1, // equal to module index
 	ComponentType:  (*Component)(nil),
 	Methods: []component.ComponentMethodDesc{
 		{
 			MethodIndex: packet.CreateAction(packet.ServicePacket, 1, 1), // 0x810001 8454145
 			FieldType:   reflect.TypeOf(BindUser{}),
 			Handler:     _BaseWorldComponent_BindUser_Handler,
-			FiledHanler: func() interface{} {
+			FieldHandler: func() interface{} {
 				return new(BindUser)
 			},
 		},
@@ -45,7 +45,7 @@ var _BaseWorldComponentDesc = component.ComponentDesc{
 			MethodIndex: packet.CreateAction(packet.ServicePacket, 1, 2), // 0x810002 8454146
 			FieldType:   reflect.TypeOf(BindSuccess{}),
 			Handler:     nil,
-			FiledHanler: func() interface{} {
+			FieldHandler: func() interface{} {
 				return new(BindSuccess)
 			},
 		},

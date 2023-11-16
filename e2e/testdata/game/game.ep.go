@@ -40,15 +40,15 @@ func _BaseWorldComponent_UpdateUserInWorld_Handler(srv interface{}, ctx context.
 }
 
 var _BaseWorldComponentDesc = component.ComponentDesc{
-	ComonentName:   "BaseWorldComponent",
-	ComponentIndex: 1, // equeal to module index
+	ComponentName:  "BaseWorldComponent",
+	ComponentIndex: 1, // equal to module index
 	ComponentType:  (*Component)(nil),
 	Methods: []component.ComponentMethodDesc{
 		{
 			MethodIndex: packet.CreateAction(packet.ServicePacket, 1, 1),
 			FieldType:   reflect.TypeOf(BindUser{}),
 			Handler:     _BaseWorldComponent_BindUser_Handler,
-			FiledHanler: func() interface{} {
+			FieldHandler: func() interface{} {
 				return new(BindUser)
 			},
 		},
@@ -56,7 +56,7 @@ var _BaseWorldComponentDesc = component.ComponentDesc{
 			MethodIndex: packet.CreateAction(packet.ServicePacket, 1, 2),
 			FieldType:   reflect.TypeOf(JoinWorld{}),
 			Handler:     _BaseWorldComponent_JoinWorld_Handler,
-			FiledHanler: func() interface{} {
+			FieldHandler: func() interface{} {
 				return new(JoinWorld)
 			},
 		},
@@ -64,7 +64,7 @@ var _BaseWorldComponentDesc = component.ComponentDesc{
 			MethodIndex: packet.CreateAction(packet.ServicePacket, 1, 3),
 			FieldType:   reflect.TypeOf(JoinWorldNotify{}),
 			Handler:     nil,
-			FiledHanler: func() interface{} {
+			FieldHandler: func() interface{} {
 				return new(JoinWorldNotify)
 			},
 		},
@@ -72,7 +72,7 @@ var _BaseWorldComponentDesc = component.ComponentDesc{
 			MethodIndex: packet.CreateAction(packet.ServicePacket, 1, 4),
 			FieldType:   reflect.TypeOf(UpdateUserInWorld{}),
 			Handler:     _BaseWorldComponent_UpdateUserInWorld_Handler,
-			FiledHanler: func() interface{} {
+			FieldHandler: func() interface{} {
 				return new(UpdateUserInWorld)
 			},
 		},
@@ -80,7 +80,7 @@ var _BaseWorldComponentDesc = component.ComponentDesc{
 			MethodIndex: packet.CreateAction(packet.ServicePacket, 1, 5),
 			FieldType:   reflect.TypeOf(BindSuccess{}),
 			Handler:     nil,
-			FiledHanler: func() interface{} {
+			FieldHandler: func() interface{} {
 				return new(BindSuccess)
 			},
 		},
@@ -88,7 +88,7 @@ var _BaseWorldComponentDesc = component.ComponentDesc{
 			MethodIndex: packet.CreateAction(packet.ServicePacket, 1, 6),
 			FieldType:   reflect.TypeOf(JoinWorldSuccess{}),
 			Handler:     nil,
-			FiledHanler: func() interface{} {
+			FieldHandler: func() interface{} {
 				return new(JoinWorldSuccess)
 			},
 		},
