@@ -130,3 +130,34 @@ func TestWebRTC(t *testing.T) {
 	<-time.After(2 * time.Second)
 
 }
+
+func TestWebRTCMiddlewareFunc(t *testing.T) {
+	global.GOGS_DISABLE_LOG = true
+	acceptor := NewWebRTCAcceptor(&AcceptorConfig{
+		Name:     "wertc",
+		HttpPort: 11001,
+		UdpPort:  11002,
+		Groups: []*AcceptorGroupConfig{
+			{
+				GroupName: "testchannel",
+				MiddlewareFunc: []MiddlewareFunc{
+					func(next http.Handler) http.Handler {
+						return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+							w.WriteHeader(http.StatusForbidden)
+						})
+					},
+				},
+			},
+		},
+	})
+	go func() {
+		acceptor.ListenAndServe()
+	}()
+	<-time.After(2 * time.Second)
+
+	resp, err := http.Post("http://127.0.0.1:11001", "application/json", bytes.NewReader([]byte{}))
+	assert.Nil(t, err)
+	defer resp.Body.Close()
+
+	assert.Equal(t, http.StatusForbidden, resp.StatusCode)
+}

@@ -106,13 +106,27 @@ func (w *WebRTCAcceptor) ListenAndServe() {
 	w.serve()
 }
 
+func adaptWebRTCHandler(handler *webRTCConnHandler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		handler.ServeHTTP(w, r)
+	})
+}
+
 func (w *WebRTCAcceptor) serve() {
 	defer w.Stop()
-	_ = http.Serve(w.httpListener, &webRTCConnHandler{
+	adaptedHandler := adaptWebRTCHandler(&webRTCConnHandler{
 		api:           w.api,
 		config:        w.config,
 		connChan:      w.connChan,
 		SugaredLogger: gslog.NewLog("webrtc_handler").Sugar(),
 		localAddr:     w.udpListener.LocalAddr(),
 	})
+
+	for _, group := range w.config.Groups {
+		for _, middleware := range group.MiddlewareFunc {
+			adaptedHandler = middleware(adaptedHandler)
+		}
+	}
+
+	_ = http.Serve(w.httpListener, adaptedHandler)
 }

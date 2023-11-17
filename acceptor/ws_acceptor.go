@@ -93,7 +93,7 @@ func (w *WSAcceptor) GetType() string {
 	return ACCEPTOR_TYPE_WS
 }
 
-func adaptHandler(handler *wsConnHandler) http.Handler {
+func adaptWSHandler(handler *wsConnHandler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		handler.ServeHTTP(w, r)
 	})
@@ -118,7 +118,7 @@ func (w *WSAcceptor) serve(upgrader *websocket.Upgrader) {
 			},
 		}
 
-		adaptedHandler := adaptHandler(handler)
+		adaptedHandler := adaptWSHandler(handler)
 
 		for _, middleware := range group.MiddlewareFunc {
 			adaptedHandler = middleware(adaptedHandler)
