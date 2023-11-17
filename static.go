@@ -18,10 +18,25 @@ func GetSessionByID(id int64) (*session.Session, error) {
 	return DefaultSessionPool.GetSessionByID(id)
 }
 
-// GetSessionByUID get session by user id.
+// GetSessionIDsByUID get session by user id.
 // the filter is used to filter the sessions that should not receive the message.
-func GetSessionByUID(uid string, filter *session.SessionFilter) ([]int64, []int64) {
+// result first is the session ids that match the filter, result second is the all session ids with the given uid.
+func GetSessionIDsByUID(uid string, filter *session.SessionFilter) ([]int64, []int64) {
 	return DefaultSessionPool.GetSessionByUID(uid, filter)
+}
+
+// GetSessionByUID get session by user id.
+func GetSessionByUID(uid string, filter *session.SessionFilter) []*session.Session {
+	list, _ := DefaultSessionPool.GetSessionByUID(uid, filter)
+	result := make([]*session.Session, 0)
+	for _, sess := range list {
+		session, err := DefaultSessionPool.GetSessionByID(sess)
+		if err == nil {
+			result = append(result, session)
+		}
+	}
+
+	return result
 }
 
 // SendMessageByID send message to the session with the given id.
@@ -55,7 +70,7 @@ func BroadcastMessage(users []string, send interface{}, filter *session.SessionF
 		if slicex.InSlice(u, exclude) {
 			continue
 		}
-		if result, _ := GetSessionByUID(u, filter); len(result) > 0 {
+		if result, _ := GetSessionIDsByUID(u, filter); len(result) > 0 {
 			SendPacketByID(result[0], packet)
 		}
 	}
@@ -69,7 +84,7 @@ func BroadcastData(users []string, data []byte, filter *session.SessionFilter, e
 		if slicex.InSlice(u, exclude) {
 			continue
 		}
-		if result, _ := GetSessionByUID(u, filter); len(result) > 0 {
+		if result, _ := GetSessionIDsByUID(u, filter); len(result) > 0 {
 			SendDataByID(result[0], data)
 		}
 	}
