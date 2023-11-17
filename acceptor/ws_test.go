@@ -1,6 +1,7 @@
 package acceptor
 
 import (
+	"net/http"
 	"testing"
 	"time"
 
@@ -25,7 +26,7 @@ func TestWebSockets(t *testing.T) {
 	}()
 	<-time.After(2 * time.Second)
 
-	client, err := newWSClinet("ws://127.0.0.1:11003/testbase")
+	client, err := newWSClient("ws://127.0.0.1:11003/testbase")
 	assert.Nil(t, err)
 	go client.Start(t)
 
@@ -87,7 +88,62 @@ func TestWebSockets(t *testing.T) {
 	<-time.After(2 * time.Second)
 }
 
-func newWSClinet(address string) (*client, error) {
+func TestWebSocketMiddlewareForbidden(t *testing.T) {
+	global.GOGS_DISABLE_LOG = true
+	acceptor := NewWSAcceptor(&AcceptorConfig{
+		Name:     "websockets",
+		HttpPort: 11004,
+		Groups: []*AcceptorGroupConfig{
+			{
+				GroupName: "testbase",
+				MiddlewareFunc: []MiddlewareFunc{
+					func(next http.Handler) http.Handler {
+						return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+							w.WriteHeader(http.StatusForbidden)
+							w.Write([]byte("hello"))
+						})
+					},
+				},
+			},
+		},
+	})
+	go func() {
+		acceptor.ListenAndServe()
+	}()
+	<-time.After(2 * time.Second)
+
+	_, err := newWSClient("ws://127.0.0.1:11004/testbase")
+	assert.NotNil(t, err)
+}
+
+func TestWebSocketMiddleware(t *testing.T) {
+	global.GOGS_DISABLE_LOG = true
+	acceptor := NewWSAcceptor(&AcceptorConfig{
+		Name:     "websockets",
+		HttpPort: 11004,
+		Groups: []*AcceptorGroupConfig{
+			{
+				GroupName: "testbase",
+				MiddlewareFunc: []MiddlewareFunc{
+					func(next http.Handler) http.Handler {
+						return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+							next.ServeHTTP(w, r)
+						})
+					},
+				},
+			},
+		},
+	})
+	go func() {
+		acceptor.ListenAndServe()
+	}()
+	<-time.After(2 * time.Second)
+
+	_, err := newWSClient("ws://127.0.0.1:11004/testbase")
+	assert.Nil(t, err)
+}
+
+func newWSClient(address string) (*client, error) {
 	conn, _, err := websocket.DefaultDialer.Dial(address, nil)
 	if err != nil {
 		return nil, err

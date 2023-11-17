@@ -1,6 +1,11 @@
 package acceptor
 
-import "time"
+import (
+	"net/http"
+	"time"
+)
+
+type MiddlewareFunc func(http.Handler) http.Handler
 
 type AcceptorConfig struct {
 	Name     string                 // the name of the acceptor
@@ -15,4 +20,5 @@ type AcceptorGroupConfig struct {
 	BucketFillInterval time.Duration // the interval of the bucket fill
 	BucketCapacity     int64         // the capacity of the bucket
 	Ordered            bool          // whether the message is ordered, only for webrtc
+	MiddlewareFunc     []MiddlewareFunc
 }

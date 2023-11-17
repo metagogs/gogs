@@ -93,12 +93,19 @@ func (w *WSAcceptor) GetType() string {
 	return ACCEPTOR_TYPE_WS
 }
 
+func adaptHandler(handler *wsConnHandler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		handler.ServeHTTP(w, r)
+	})
+}
+
 func (w *WSAcceptor) serve(upgrader *websocket.Upgrader) {
 	defer w.Stop()
 
 	mux := http.NewServeMux()
 	for _, group := range w.config.Groups {
-		mux.Handle("/"+group.GroupName, &wsConnHandler{
+
+		handler := &wsConnHandler{
 			upgrader:      upgrader,
 			connChan:      w.connChan,
 			SugaredLogger: gslog.NewLog("ws_handler").Sugar(),
@@ -109,7 +116,15 @@ func (w *WSAcceptor) serve(upgrader *websocket.Upgrader) {
 				BucketFillInterval: group.BucketFillInterval,
 				BucketCapacity:     group.BucketCapacity,
 			},
-		})
+		}
+
+		adaptedHandler := adaptHandler(handler)
+
+		for _, middleware := range group.MiddlewareFunc {
+			adaptedHandler = middleware(adaptedHandler)
+		}
+
+		mux.Handle("/"+group.GroupName, adaptedHandler)
 	}
 	_ = http.Serve(w.listener, mux)
 }
