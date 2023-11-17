@@ -1,6 +1,6 @@
 module github.com/metagogs/gogs
 
-go 1.21.3
+go 1.21
 
 require (
 	github.com/bwmarrin/snowflake v0.3.0
