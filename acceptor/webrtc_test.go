@@ -135,8 +135,8 @@ func TestWebRTCMiddlewareFunc(t *testing.T) {
 	global.GOGS_DISABLE_LOG = true
 	acceptor := NewWebRTCAcceptor(&AcceptorConfig{
 		Name:     "wertc",
-		HttpPort: 11001,
-		UdpPort:  11002,
+		HttpPort: 11003,
+		UdpPort:  11004,
 		Groups: []*AcceptorGroupConfig{
 			{
 				GroupName: "testchannel",

@@ -108,7 +108,7 @@ func (pool *sessionPoolImpl) CreateSession(agent networkentity.NetworkEntity) *S
 		agent:      agent,
 		pool:       pool,
 		sessionLog: gslog.NewLog("session"),
-		data:       NewSessionMemeory(),
+		data:       NewSessionMemory(),
 	}
 
 	pool.sessionsByID.Store(s.id, s)

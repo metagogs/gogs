@@ -2,19 +2,19 @@ package session
 
 import "sync"
 
-type SessionMemeory struct {
+type SessionMemory struct {
 	sync.RWMutex
 	data map[string]interface{}
 }
 
-func NewSessionMemeory() *SessionMemeory {
-	return &SessionMemeory{
+func NewSessionMemory() *SessionMemory {
+	return &SessionMemory{
 		data: make(map[string]interface{}),
 	}
 }
 
 // GetData gets the data
-func (sess *SessionMemeory) GetData() map[string]interface{} {
+func (sess *SessionMemory) GetData() map[string]interface{} {
 	sess.RLock()
 	defer sess.RUnlock()
 
@@ -22,14 +22,14 @@ func (sess *SessionMemeory) GetData() map[string]interface{} {
 }
 
 // Set associates value with the key in session storage
-func (sess *SessionMemeory) Set(key string, value interface{}) {
+func (sess *SessionMemory) Set(key string, value interface{}) {
 	sess.Lock()
 	defer sess.Unlock()
 
 	sess.data[key] = value
 }
 
-func (sess *SessionMemeory) Get(key string) (interface{}, bool) {
+func (sess *SessionMemory) Get(key string) (interface{}, bool) {
 	sess.RLock()
 	defer sess.RUnlock()
 
@@ -37,14 +37,14 @@ func (sess *SessionMemeory) Get(key string) (interface{}, bool) {
 	return value, ok
 }
 
-func (sess *SessionMemeory) Delete(key string) {
+func (sess *SessionMemory) Delete(key string) {
 	sess.RLock()
 	defer sess.RUnlock()
 
 	delete(sess.data, key)
 }
 
-func (sess *SessionMemeory) GetString(key, def string) string {
+func (sess *SessionMemory) GetString(key, def string) string {
 	sess.RLock()
 	defer sess.RUnlock()
 

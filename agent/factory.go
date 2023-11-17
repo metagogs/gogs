@@ -26,8 +26,8 @@ var (
 	}
 )
 
-// AgentFacotry is the facotry to create the agent
-type AgentFacotry struct {
+// AgentFactory is the factory to create the agent
+type AgentFactory struct {
 	config             *config.Config
 	sf                 *snowflake.Node        // snowflake node
 	sessionPool        session.SessionPool    // session pool
@@ -37,14 +37,14 @@ type AgentFacotry struct {
 
 func NewAgentFactory(config *config.Config,
 	pool session.SessionPool,
-	messageServer *message.MessageServer) *AgentFacotry {
+	messageServer *message.MessageServer) *AgentFactory {
 
 	sf, err := snow.NewSnowNode()
 	if err != nil {
 		fmt.Println(err.Error())
 		os.Exit(1)
 	}
-	return &AgentFacotry{
+	return &AgentFactory{
 		config:             config,
 		sf:                 sf,
 		sessionPool:        pool,
@@ -53,7 +53,7 @@ func NewAgentFactory(config *config.Config,
 	}
 }
 
-func (af *AgentFacotry) NewAgent(conn acceptor.AcceptorConn) *Agent {
+func (af *AgentFactory) NewAgent(conn acceptor.AcceptorConn) *Agent {
 	agentId := af.sf.Generate().Int64()
 	agent := &Agent{
 		AgentID:          agentId,

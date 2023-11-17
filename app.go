@@ -51,24 +51,24 @@ func NewApp(config *config.Config) *App {
 	global.GoGSDebug = config.Debug
 	appLog := gslog.NewLog("gogs")
 
-	appBuidler := NewBuilder(config)
+	appBuilder := NewBuilder(config)
 
 	// agent管理
-	agentFactory := agent.NewAgentFactory(config, appBuidler.sessionPool, appBuidler.messageServer)
+	agentFactory := agent.NewAgentFactory(config, appBuilder.sessionPool, appBuilder.messageServer)
 
 	// 消息处理
-	appHandler := handler.NewHanlderService(config, agentFactory, appBuidler.messageServer)
+	appHandler := handler.NewHandlerService(config, agentFactory, appBuilder.messageServer)
 
 	app := &App{
 		Logger:        appLog,
 		handler:       appHandler,
 		dieChan:       make(chan bool),
 		Config:        config,
-		GroupServer:   appBuidler.groupServer,
-		sessionPool:   appBuidler.sessionPool,
-		adminServer:   appBuidler.adminServer,
-		MessageServer: appBuidler.messageServer,
-		webServer:     appBuidler.webServer,
+		GroupServer:   appBuilder.groupServer,
+		sessionPool:   appBuilder.sessionPool,
+		adminServer:   appBuilder.adminServer,
+		MessageServer: appBuilder.messageServer,
+		webServer:     appBuilder.webServer,
 	}
 
 	system.RegisterSystemComponent(app.MessageServer, NewNetworkComponent(app))
@@ -95,8 +95,8 @@ func (app *App) GetAcceptors() []acceptor.Acceptor {
 	return app.acceptors
 }
 
-func (app *App) SetAgentFactory(factory *agent.AgentFacotry) {
-	app.handler.SetAgentFacotry(factory)
+func (app *App) SetAgentFactory(factory *agent.AgentFactory) {
+	app.handler.SetAgentFactory(factory)
 }
 
 func (app *App) UseDefaultEncodeJSON() {

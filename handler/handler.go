@@ -18,7 +18,7 @@ import (
 	"go.uber.org/zap"
 )
 
-type unhandlerMessage struct {
+type unHandlerMessage struct {
 	ctx  context.Context
 	sess *session.Session
 	in   *packet.Packet
@@ -26,28 +26,28 @@ type unhandlerMessage struct {
 
 type HandlerService struct {
 	config                *config.Config
-	agentFactory          *agent.AgentFacotry
+	agentFactory          *agent.AgentFactory
 	messageServer         *message.MessageServer
-	chLocalMessageProcess chan unhandlerMessage
+	chLocalMessageProcess chan unHandlerMessage
 	*zap.Logger
 }
 
 // NewHandlerService create a new handler service, can get all the client's message
-func NewHanlderService(config *config.Config, factory *agent.AgentFacotry, messageServer *message.MessageServer) *HandlerService {
+func NewHandlerService(config *config.Config, factory *agent.AgentFactory, messageServer *message.MessageServer) *HandlerService {
 	return &HandlerService{
 		config:                config,
 		agentFactory:          factory,
 		Logger:                gslog.NewLog("handler"),
 		messageServer:         messageServer,
-		chLocalMessageProcess: make(chan unhandlerMessage, 100),
+		chLocalMessageProcess: make(chan unHandlerMessage, 100),
 	}
 }
 
-func (h *HandlerService) SetAgentFacotry(factory *agent.AgentFacotry) {
+func (h *HandlerService) SetAgentFactory(factory *agent.AgentFactory) {
 	h.agentFactory = factory
 }
 
-func (h *HandlerService) dispatchMessage(m unhandlerMessage) {
+func (h *HandlerService) dispatchMessage(m unHandlerMessage) {
 	defer func() {
 		if r := recover(); r != nil {
 			h.toPanicError(r)
@@ -118,7 +118,7 @@ func (h *HandlerService) processPacket(a *agent.Agent, data []byte) {
 		return
 	}
 
-	h.dispatchMessage(unhandlerMessage{
+	h.dispatchMessage(unHandlerMessage{
 		ctx:  context.Background(),
 		sess: a.GetSession(),
 		in:   in,

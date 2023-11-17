@@ -7,7 +7,7 @@ import (
 )
 
 func TestNewSessionMemeory(t *testing.T) {
-	m := NewSessionMemeory()
+	m := NewSessionMemory()
 	out, exist := m.Get("test")
 	assert.False(t, exist)
 	assert.Nil(t, out)
