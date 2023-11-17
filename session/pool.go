@@ -1,7 +1,6 @@
 package session
 
 import (
-	"strconv"
 	"sync"
 	"sync/atomic"
 
@@ -104,7 +103,6 @@ func NewSessionPool(config *config.Config) *sessionPoolImpl {
 func (pool *sessionPoolImpl) CreateSession(agent networkentity.NetworkEntity) *Session {
 	s := &Session{
 		id:         agent.GetId(),
-		uid:        strconv.FormatInt(agent.GetId(), 10),
 		agent:      agent,
 		pool:       pool,
 		sessionLog: gslog.NewLog("session"),
@@ -141,6 +139,8 @@ func (pool *sessionPoolImpl) addSessionByUID(uid string, sess *Session) {
 	}
 }
 
+// deleteSessionByUID delete session by uid
+// id is the session id, because one uid maybe has many session
 func (pool *sessionPoolImpl) deleteSessionByUID(uid string, id int64) {
 	if v, ok := pool.sessionByUID.Load(uid); ok {
 		if v.(*sessionList).Delete(id) == 0 {

@@ -39,7 +39,14 @@ func (sess *Session) UID() string {
 }
 
 func (sess *Session) SetUID(uid string) {
+	// delete old data before set new uid
+	if len(sess.uid) > 0 {
+		sess.pool.deleteSessionByUID(sess.uid, sess.id)
+	}
 	sess.uid = uid
+	if len(sess.uid) == 0 {
+		return
+	}
 	sess.pool.addSessionByUID(uid, sess)
 }
 
