@@ -120,7 +120,7 @@ func TestWebSocketMiddleware(t *testing.T) {
 	global.GOGS_DISABLE_LOG = true
 	acceptor := NewWSAcceptor(&AcceptorConfig{
 		Name:     "websockets",
-		HttpPort: 11004,
+		HttpPort: 11005,
 		Groups: []*AcceptorGroupConfig{
 			{
 				GroupName: "testbase",
@@ -139,7 +139,7 @@ func TestWebSocketMiddleware(t *testing.T) {
 	}()
 	<-time.After(2 * time.Second)
 
-	_, err := newWSClient("ws://127.0.0.1:11004/testbase")
+	_, err := newWSClient("ws://127.0.0.1:11005/testbase")
 	assert.Nil(t, err)
 }
 

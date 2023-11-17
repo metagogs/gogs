@@ -3,6 +3,7 @@ package filex
 import (
 	"bytes"
 	"os"
+	"strings"
 )
 
 func IsFileEqual(a, b string) bool {
@@ -16,5 +17,8 @@ func IsFileEqual(a, b string) bool {
 		return false
 	}
 
-	return bytes.Equal(f1, f2)
+	normF1 := strings.ReplaceAll(string(f1), "\r\n", "\n")
+	normF2 := strings.ReplaceAll(string(f2), "\r\n", "\n")
+
+	return bytes.Equal([]byte(normF1), []byte(normF2))
 }
