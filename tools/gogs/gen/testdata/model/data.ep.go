@@ -29,7 +29,7 @@ func _BaseWorldComponent_BindUser_Handler(srv interface{}, ctx context.Context, 
 }
 
 var _BaseWorldComponentDesc = component.ComponentDesc{
-	ComponentName:   "BaseWorldComponent",
+	ComponentName:  "BaseWorldComponent",
 	ComponentIndex: 1, // equal to module index
 	ComponentType:  (*Component)(nil),
 	Methods: []component.ComponentMethodDesc{

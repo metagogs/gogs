@@ -40,7 +40,7 @@ func _{{.ComponentName}}Component_{{.Name}}_Handler(srv interface{}, ctx context
 {{range .Components}}
 var _{{.Name}}ComponentDesc = component.ComponentDesc{
 	ComponentName:   "{{.Name}}Component",
-	ComponentIndex: {{.Index}}, //  to module index
+	ComponentIndex: {{.Index}}, // equal to module index
 	ComponentType:  (*Component)(nil),
 	Methods: []component.ComponentMethodDesc{
 		{{range .Fields}}{
