@@ -17,7 +17,7 @@ require (
 	github.com/pion/webrtc/v3 v3.2.23
 	github.com/pterm/pterm v0.12.71
 	github.com/spf13/cobra v1.8.0
-	github.com/spf13/viper v1.18.0
+	github.com/spf13/viper v1.18.1
 	github.com/stretchr/testify v1.8.4
 	github.com/tidwall/gjson v1.17.0
 	go.uber.org/zap v1.26.0
