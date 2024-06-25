@@ -1,6 +1,8 @@
 package session
 
 import (
+	"strconv"
+
 	"github.com/metagogs/gogs/acceptor"
 	"github.com/metagogs/gogs/networkentity"
 	"github.com/metagogs/gogs/packet"
@@ -32,6 +34,10 @@ func (sess *Session) log() *zap.Logger {
 
 func (sess *Session) ID() int64 {
 	return sess.agent.GetId()
+}
+
+func (sess *Session) IDString() string {
+	return strconv.FormatInt(sess.ID(), 10)
 }
 
 func (sess *Session) UID() string {
