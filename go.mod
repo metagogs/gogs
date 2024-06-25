@@ -11,7 +11,7 @@ require (
 	github.com/gin-contrib/cors v1.5.0
 	github.com/gin-gonic/gin v1.9.1
 	github.com/gogf/gf v1.16.9
-	github.com/gorilla/websocket v1.5.1
+	github.com/gorilla/websocket v1.5.3
 	github.com/juju/ratelimit v1.0.2
 	github.com/pion/datachannel v1.5.6
 	github.com/pion/webrtc/v3 v3.2.42
