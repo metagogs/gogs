@@ -46,7 +46,7 @@ func (a *Agent) GetSession() *session.Session {
 
 func (a *Agent) Start() {
 	a.log().Info("agent start")
-	// start write message channle
+	// start write message channel
 	go a.write()
 	// start heartbeat
 	go a.heartbeat()

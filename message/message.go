@@ -53,7 +53,7 @@ func (m *MessageServer) UseDefaultEncodeProto() {
 }
 
 // UseDefaultEncodeJSON 设置默认编码器
-func (m *MessageServer) UseDefaultEncodeJSONWithHeader() {
-	// 发送消息时不包含头部,使用JSON,方便测试使用
+func (m *MessageServer) UseDefaultEncodePureJSON() {
+	// 发送消息时不包含头部,使用JSON,方便测试使用,纯JSON
 	m.codecHelper.RegisterEncode(codec.CodecJSONDataNoHeader, &codec.JSONEncode{})
 }

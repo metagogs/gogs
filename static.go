@@ -60,7 +60,7 @@ func SendPacketByID(sessionId int64, in *packet.Packet) {
 
 // BroadcastMessage broadcast message to all sessions except the session with the given id.
 // the filter is used to filter the sessions that should not receive the message.
-// send pakcet
+// send packet
 func BroadcastMessage(users []string, send interface{}, filter *session.SessionFilter, exclude ...string) error {
 	packet, err := EncodeMessage(send)
 	if err != nil {

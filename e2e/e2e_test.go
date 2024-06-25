@@ -132,7 +132,7 @@ func TestSendConnectWS(t *testing.T) {
 	}
 
 	t.Log("change the encode type with json encode without header")
-	testdata.TestApp.UseDefaultEncodeJSONWithHeader()
+	testdata.TestApp.UseDefaultEncodePureJSON()
 	t.Log("user1 send the UpdateUserInWorld message")
 	err = testClient.WriteMessage(websocket.BinaryMessage, encodeMessage(t, &game.UpdateUserInWorld{
 		Uid: uid,

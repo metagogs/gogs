@@ -13,7 +13,7 @@ import (
 	"go.uber.org/zap"
 )
 
-// WebRTCAcceptor accept the webrtc datachannel connection
+// WebRTCAcceptor accept the webrtc data channel connection
 type WebRTCAcceptor struct {
 	connChan     chan AcceptorConn
 	httpListener net.Listener
@@ -76,7 +76,7 @@ func (w *WebRTCAcceptor) Stop() {
 	}
 	if errHttp == nil && errUdp == nil {
 		atomic.StoreInt32(&w.state, StatusClosed)
-		gslog.NewLog("webrtc_acceptor").Info("wx_acceptr stoped")
+		gslog.NewLog("webrtc_acceptor").Info("wx_acceptor stop")
 	}
 }
 

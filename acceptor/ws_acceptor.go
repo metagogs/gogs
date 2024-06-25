@@ -78,7 +78,7 @@ func (w *WSAcceptor) Stop() {
 		return
 	}
 	atomic.StoreInt32(&w.state, StatusClosed)
-	gslog.NewLog("ws_acceptor").Info("ws_acceptor stoped")
+	gslog.NewLog("ws_acceptor").Info("ws_acceptor stop")
 }
 
 func (w *WSAcceptor) GetConnChan() chan AcceptorConn {

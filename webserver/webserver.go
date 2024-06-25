@@ -30,12 +30,12 @@ func (app *WebServer) RegisterWebHandler(port int, f func(gin *gin.Engine)) {
 	if _, exist := app.httpServe[port]; exist {
 		panic("port is used")
 	}
-	app.httpServe[port] = app.craeteServer()
+	app.httpServe[port] = app.createServer()
 	f(app.httpServe[port])
 }
 
 // createServer create the gin engine
-func (app *WebServer) craeteServer() *gin.Engine {
+func (app *WebServer) createServer() *gin.Engine {
 	return gin.New()
 }
 

@@ -6,7 +6,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestNewSessionMemeory(t *testing.T) {
+func TestNewSessionMemory(t *testing.T) {
 	m := NewSessionMemory()
 	out, exist := m.Get("test")
 	assert.False(t, exist)

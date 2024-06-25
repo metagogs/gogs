@@ -107,8 +107,11 @@ func (app *App) UseDefaultEncodeProto() {
 	app.MessageServer.UseDefaultEncodeProto()
 }
 
-func (app *App) UseDefaultEncodeJSONWithHeader() {
-	app.MessageServer.UseDefaultEncodeJSONWithHeader()
+// UseDefaultEncodePureJSON 发送消息时不包含头部,使用JSON,方便测试使用,纯JSON
+// 编码有两种，一种是带头部的，一种是不带头部的
+// PureJSON是不带头部的，类型是写在action里面的
+func (app *App) UseDefaultEncodePureJSON() {
+	app.MessageServer.UseDefaultEncodePureJSON()
 }
 
 func (app *App) RegisterWebHandler(port int, f func(gin *gin.Engine)) {

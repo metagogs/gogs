@@ -14,7 +14,7 @@ type ConnInfo struct {
 	BucketCapacity     int64         // the capacity of the bucket
 }
 
-// AcceptorConn iface
+// AcceptorConn interface
 type AcceptorConn interface {
 	GetNextMessage() (b []byte, err error) // get the next message
 	GetInfo() *ConnInfo                    // get the conn info
