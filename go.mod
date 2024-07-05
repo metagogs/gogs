@@ -16,7 +16,7 @@ require (
 	github.com/pion/datachannel v1.5.6
 	github.com/pion/webrtc/v3 v3.2.44
 	github.com/pterm/pterm v0.12.74
-	github.com/spf13/cobra v1.8.0
+	github.com/spf13/cobra v1.8.1
 	github.com/spf13/viper v1.18.2
 	github.com/stretchr/testify v1.9.0
 	github.com/tidwall/gjson v1.17.0
