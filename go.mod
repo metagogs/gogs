@@ -4,7 +4,7 @@ go 1.21
 
 require (
 	github.com/bwmarrin/snowflake v0.3.0
-	github.com/bytedance/sonic v1.11.9
+	github.com/bytedance/sonic v1.12.0
 	github.com/emicklei/proto v1.13.0
 	github.com/emirpasic/gods v1.18.1
 	github.com/ettle/strcase v0.2.0
@@ -29,7 +29,7 @@ require (
 	atomicgo.dev/keyboard v0.2.9 // indirect
 	atomicgo.dev/schedule v0.1.0 // indirect
 	github.com/BurntSushi/toml v0.4.1 // indirect
-	github.com/bytedance/sonic/loader v0.1.1 // indirect
+	github.com/bytedance/sonic/loader v0.2.0 // indirect
 	github.com/cloudwego/base64x v0.1.4 // indirect
 	github.com/cloudwego/iasm v0.2.0 // indirect
 	github.com/containerd/console v1.0.3 // indirect
