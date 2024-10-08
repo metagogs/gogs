@@ -14,7 +14,7 @@ require (
 	github.com/gorilla/websocket v1.5.3
 	github.com/juju/ratelimit v1.0.2
 	github.com/pion/datachannel v1.5.8
-	github.com/pion/webrtc/v3 v3.3.0
+	github.com/pion/webrtc/v3 v3.3.4
 	github.com/pterm/pterm v0.12.74
 	github.com/spf13/cobra v1.8.1
 	github.com/spf13/viper v1.18.2
@@ -57,7 +57,7 @@ require (
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/pelletier/go-toml/v2 v2.1.0 // indirect
 	github.com/pion/dtls/v2 v2.2.12 // indirect
-	github.com/pion/ice/v2 v2.3.34 // indirect
+	github.com/pion/ice/v2 v2.3.36 // indirect
 	github.com/pion/interceptor v0.1.29 // indirect
 	github.com/pion/logging v0.2.2 // indirect
 	github.com/pion/mdns v0.0.12 // indirect
