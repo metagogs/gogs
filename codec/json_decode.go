@@ -1,20 +1,20 @@
 package codec
 
 import (
-	"github.com/bytedance/sonic"
+	"encoding/json"
 )
 
 type JSONDecode struct{}
 
 func (c *JSONDecode) Decode(data []byte, in interface{}) error {
-	if sonic.ConfigDefault.Valid(data) {
-		return sonic.Unmarshal(data, in)
+	if json.Valid(data) {
+		return json.Unmarshal(data, in)
 	}
 	return ErrNotValidJSONType
 }
 
 func (c *JSONDecode) String(in interface{}) string {
-	msg, err := sonic.Marshal(in)
+	msg, err := json.Marshal(in)
 	if err != nil {
 		return "proto encode error, " + err.Error()
 	}

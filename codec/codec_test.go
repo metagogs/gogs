@@ -6,7 +6,6 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/bytedance/sonic"
 	"github.com/gogf/gf/util/gconv"
 	"github.com/metagogs/gogs/config"
 	"github.com/metagogs/gogs/packet"
@@ -63,7 +62,7 @@ func jsonData(in interface{}) []byte {
 }
 
 func jsonHeaderData(in interface{}) []byte {
-	b, _ := sonic.Marshal(in)
+	b, _ := json.Marshal(in)
 	return b
 }
 

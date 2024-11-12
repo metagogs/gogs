@@ -7,7 +7,6 @@ import (
 type JSONEncode struct{}
 
 func (c *JSONEncode) Encode(in interface{}) ([]byte, error) {
-	// 标准json的encode比sonic快，decode没有
 	return json.Marshal(in)
 }
 

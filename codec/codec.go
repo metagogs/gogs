@@ -1,6 +1,7 @@
 package codec
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/gogf/gf/util/gconv"
@@ -9,8 +10,6 @@ import (
 	"github.com/metagogs/gogs/packet"
 	"github.com/tidwall/gjson"
 	"go.uber.org/zap"
-
-	"github.com/bytedance/sonic"
 )
 
 // 7E 0A 41 00 02 00 00 0F 0A 0D 31 36 36 30 33 36 30 39 31 35 35 35 36
@@ -175,7 +174,7 @@ func (d *CodecHelper) decodeJSONWithoutHeader(data []byte) (*packet.Packet, erro
 			return nil, ErrActionNotExist
 		}
 
-		if err := sonic.Unmarshal(data, in); err != nil {
+		if err := json.Unmarshal(data, in); err != nil {
 			return nil, err
 		}
 
