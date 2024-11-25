@@ -17,7 +17,7 @@ require (
 	github.com/pterm/pterm v0.12.74
 	github.com/spf13/cobra v1.8.1
 	github.com/spf13/viper v1.18.2
-	github.com/stretchr/testify v1.9.0
+	github.com/stretchr/testify v1.10.0
 	github.com/tidwall/gjson v1.18.0
 	go.uber.org/zap v1.27.0
 	google.golang.org/protobuf v1.35.2
