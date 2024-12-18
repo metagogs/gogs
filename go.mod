@@ -4,7 +4,7 @@ go 1.21
 
 require (
 	github.com/bwmarrin/snowflake v0.3.0
-	github.com/emicklei/proto v1.13.0
+	github.com/emicklei/proto v1.14.0
 	github.com/emirpasic/gods v1.18.1
 	github.com/ettle/strcase v0.2.0
 	github.com/gin-contrib/cors v1.5.0
