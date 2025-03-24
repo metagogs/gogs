@@ -1,6 +1,7 @@
 module github.com/metagogs/gogs
 
 go 1.21
+toolchain go1.24.1
 
 require (
 	github.com/bwmarrin/snowflake v0.3.0
@@ -20,7 +21,7 @@ require (
 	github.com/stretchr/testify v1.10.0
 	github.com/tidwall/gjson v1.18.0
 	go.uber.org/zap v1.27.0
-	google.golang.org/protobuf v1.36.1
+	google.golang.org/protobuf v1.36.6
 )
 
 require (
