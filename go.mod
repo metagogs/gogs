@@ -1,11 +1,12 @@
 module github.com/metagogs/gogs
 
-go 1.21
+go 1.23.0
+
 toolchain go1.24.1
 
 require (
 	github.com/bwmarrin/snowflake v0.3.0
-	github.com/emicklei/proto v1.14.0
+	github.com/emicklei/proto v1.14.1
 	github.com/emirpasic/gods v1.18.1
 	github.com/ettle/strcase v0.2.0
 	github.com/gin-contrib/cors v1.7.4
