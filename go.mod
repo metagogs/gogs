@@ -1,6 +1,7 @@
 module github.com/metagogs/gogs
 
-go 1.21
+go 1.23.0
+
 toolchain go1.24.1
 
 require (
@@ -9,7 +10,7 @@ require (
 	github.com/emirpasic/gods v1.18.1
 	github.com/ettle/strcase v0.2.0
 	github.com/gin-contrib/cors v1.7.4
-	github.com/gin-gonic/gin v1.10.0
+	github.com/gin-gonic/gin v1.10.1
 	github.com/gogf/gf v1.16.9
 	github.com/gorilla/websocket v1.5.3
 	github.com/juju/ratelimit v1.0.2
