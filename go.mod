@@ -6,7 +6,7 @@ toolchain go1.24.1
 
 require (
 	github.com/bwmarrin/snowflake v0.3.0
-	github.com/emicklei/proto v1.14.1
+	github.com/emicklei/proto v1.14.2
 	github.com/emirpasic/gods v1.18.1
 	github.com/ettle/strcase v0.2.0
 	github.com/gin-contrib/cors v1.7.5
