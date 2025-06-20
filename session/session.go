@@ -10,13 +10,13 @@ import (
 )
 
 type Session struct {
-	uid              string                      // session/user id
-	id               int64                       // agent id
-	pool             *sessionPoolImpl            // session pool
-	sessionLog       *zap.Logger                 // session log
-	agent            networkentity.NetworkEntity // agent
-	data             SessionData                 // session data
-	OnCloseCallbacks []func(id int64)            // close callback
+	uid              string                       // session/user id
+	id               int64                        // agent id
+	pool             *sessionPoolImpl             // session pool
+	sessionLog       *zap.Logger                  // session log
+	agent            networkentity.NetworkEntity  // agent
+	data             SessionData                  // session data
+	OnCloseCallbacks []func(id int64, uid string) // close callback
 }
 
 func (sess *Session) Close() {
@@ -83,21 +83,21 @@ func (sess *Session) GetData() SessionData {
 	return sess.data
 }
 
-func (sess *Session) OnClose(c func(id int64)) error {
+func (sess *Session) OnClose(c func(id int64, uid string)) error {
 	sess.OnCloseCallbacks = append(sess.OnCloseCallbacks, c)
 	return nil
 }
 
-func (sess *Session) GetOnCloseCallbacks() []func(id int64) {
+func (sess *Session) GetOnCloseCallbacks() []func(id int64, uid string) {
 	return sess.OnCloseCallbacks
 }
 
-func (sess *Session) SetOnCloseCallbacks(callbacks []func(id int64)) {
+func (sess *Session) SetOnCloseCallbacks(callbacks []func(id int64, uid string)) {
 	sess.OnCloseCallbacks = callbacks
 }
 
-func (sess *Session) SetOnCloseCallback(c func(id int64)) {
-	sess.OnCloseCallbacks = []func(id int64){c}
+func (sess *Session) SetOnCloseCallback(c func(id int64, uid string)) {
+	sess.OnCloseCallbacks = []func(id int64, uid string){c}
 }
 
 func (sess *Session) GetLatency() int64 {

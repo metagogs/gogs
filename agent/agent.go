@@ -63,10 +63,12 @@ func (a *Agent) Stop() error {
 
 	// check if already closed
 	if a.GetStatus() == StatusClosed {
+		a.log().Info("agent already closed")
 		return ErrCloseClosedSession
 	}
 	a.SetStatus(StatusClosed)
 
+	a.log().Info("agent stop")
 	select {
 	case <-a.chDie:
 	default:
@@ -89,9 +91,9 @@ func (a *Agent) onSessionClosed() {
 			a.log().Error("onSessionClosed error", zap.Any("recover", err))
 		}
 	}()
-
+	a.log().Info("onSessionClosed")
 	for _, fn := range a.sess.GetOnCloseCallbacks() {
-		fn(a.sess.ID())
+		fn(a.sess.ID(), a.sess.UID())
 	}
 
 }
